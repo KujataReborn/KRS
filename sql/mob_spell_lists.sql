@@ -557,6 +557,8 @@ INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,242,61,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,245,12,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,247,25,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,252,37,255);
+INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,253,20,255);
+INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,259,41,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,260,32,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,266,43,255);
 INSERT INTO `mob_spell_lists` VALUES ('Elemental_Dark',18,267,41,255);
