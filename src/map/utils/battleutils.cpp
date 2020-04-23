@@ -989,8 +989,8 @@ namespace battleutils
             // Generic drain for anyone able to do melee damage to a dazed target
             // TODO: ignore dazes from dancers outside party
             int16 delay = PAttacker->GetWeaponDelay(false) / 10;
-			//if dual weilding, each weapon drains based on half total delay (then floored)
-			if (PAttacker->isDualWielding()) delay = delay / 2;
+            //if dual weilding, each weapon drains based on half total delay (then floored)
+            if (PAttacker->isDualWielding()) delay = delay / 2;
 
             if (PAttacker->PMaster == nullptr)
             {
@@ -1043,17 +1043,17 @@ namespace battleutils
                 {
                     int8 Samba = dsprand::GetRandomNumber(1, (delay * power) / 100 + 1);
 
-					// retail testing showed there was no level correction to Samba Drain ammounts.
+                    // retail testing showed there was no level correction to Samba Drain ammounts.
                     // vary damage based on lvl diff
                     /*
-					int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel()) / 2;
+                    int8 lvlDiff = (PDefender->GetMLevel() - PAttacker->GetMLevel()) / 2;
 
                     if (lvlDiff < -5) {
                         lvlDiff = -5;
                     }
 
                     Samba -= lvlDiff;
-					*/
+                    */
 
                     if (Samba > (finaldamage / 2)) {
                         Samba = finaldamage / 2;

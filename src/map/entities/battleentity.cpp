@@ -120,7 +120,7 @@ bool CBattleEntity::isInAssault()
 bool CBattleEntity::isDualWielding()
 {
     if (m_Weapons[SLOT_SUB]->getDmgType() > 0 &&
-             m_Weapons[SLOT_SUB]->getDmgType() < 4)
+            m_Weapons[SLOT_SUB]->getDmgType() < 4)
     {
         return true;
     }
