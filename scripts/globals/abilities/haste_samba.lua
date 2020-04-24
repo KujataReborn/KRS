@@ -2,9 +2,9 @@
 -- Ability: Haste Samba
 -- Inflicts the next target you strike with Haste daze, increasing the attack speed of all those engaged in battle with it.
 -- Obtained: Dancer Level 45
--- TP Cost: 35%
--- Recast Time: 1:00
--- Duration: 1:30
+-- TP Cost: 350
+-- Recast Time: 00:01:00
+-- Duration: 00:01:30
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")

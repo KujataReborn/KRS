@@ -2,22 +2,21 @@
 -- Ability: Aspir Samba II
 -- Inflicts the next target you strike with Aspir daze, allowing all those engaged in battle with it to drain its MP.
 -- Obtained: Dancer Level 60
--- Recast Time: 1:00
--- TP Cost: 25%
--- Duration: 1:30
+-- TP Cost: 250
+-- Recast Time: 00:01:00
+-- Duration: 00:01:30
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-    if (player:hasStatusEffect(tpz.effect.FAN_DANCE)) then
+    if player:hasStatusEffect(tpz.effect.FAN_DANCE) then
         return tpz.msg.basic.UNABLE_TO_USE_JA2, 0
-    elseif (player:hasStatusEffect(tpz.effect.TRANCE)) then
+    elseif player:hasStatusEffect(tpz.effect.TRANCE) then
         return 0,0
-    elseif (player:getTP() < 250) then
+    elseif player:getTP() < 250 then
         return tpz.msg.basic.NOT_ENOUGH_TP,0
     else
         return 0,0
@@ -31,9 +30,8 @@ function onUseAbility(player,target,ability)
     end
 
     local duration = 120 + player:getMod(tpz.mod.SAMBA_DURATION)
-    duration = duration * (100 + player:getMod(tpz.mod.SAMBA_PDURATION))/100
+    duration = duration * ((100 + player:getMod(tpz.mod.SAMBA_PDURATION)) / 100)
     player:delStatusEffect(tpz.effect.HASTE_SAMBA)
     player:delStatusEffect(tpz.effect.DRAIN_SAMBA)
-    player:addStatusEffect(tpz.effect.ASPIR_SAMBA,3,0,duration)
-
+    player:addStatusEffect(tpz.effect.ASPIR_SAMBA, 3, 0, duration)
 end

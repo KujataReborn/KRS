@@ -1,6 +1,8 @@
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/magic")
+-----------------------------------
+--
+-- tpz.effect.ASPIR_SAMBA
+--
+-----------------------------------
 
 function onEffectGain(target,effect)
 end
