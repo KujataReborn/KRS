@@ -12,47 +12,34 @@ require("scripts/globals/msg")
 
 function onAbilityCheck(player,target,ability)
 
-    if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
+    if
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4) or
+        player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)
+    then
         return 0,0
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
-        return 0,0
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
-        return 0,0
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
-        return 0,0
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-        return 0,0
-
     else
         return tpz.msg.basic.NO_FINISHINGMOVES,0
     end
 end
 
 function onUseAbility(player,target,ability)
-
     local TPGain = 0
     local STM = 0.5 + (0.1 * player:getMod(tpz.mod.REVERSE_FLOURISH_EFFECT))
+    local merits = player:getMerit(tpz.merit.REVERSE_FLOURISH_EFFECT)
 
-    local Merits = player:getMerit(tpz.merit.REVERSE_FLOURISH_EFFECT)
-
-    if (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1)) then
-        TPGain = 9.5 * 1 + STM * 1 ^ 2 + Merits
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2)) then
-        TPGain = 9.5 * 2 + STM * 2 ^ 2 + Merits
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3)) then
-        TPGain = 9.5 * 3 + STM * 3 ^ 2 + Merits
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4)) then
-        TPGain = 9.5 * 4 + STM * 4 ^ 2 + Merits
-
-    elseif (player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5)) then
-        TPGain = 9.5 * 5 + STM * 5 ^ 2 + Merits
+    if player:hasStatusEffect(tpz.effect.FINISHING_MOVE_1) then
+        TPGain = 9.5 * 1 + STM * 1 ^ 2 + merits
+    elseif player:hasStatusEffect(tpz.effect.FINISHING_MOVE_2) then
+        TPGain = 9.5 * 2 + STM * 2 ^ 2 + merits
+    elseif player:hasStatusEffect(tpz.effect.FINISHING_MOVE_3) then
+        TPGain = 9.5 * 3 + STM * 3 ^ 2 + merits
+    elseif player:hasStatusEffect(tpz.effect.FINISHING_MOVE_4) then
+        TPGain = 9.5 * 4 + STM * 4 ^ 2 + merits
+    elseif player:hasStatusEffect(tpz.effect.FINISHING_MOVE_5) then
+        TPGain = 9.5 * 5 + STM * 5 ^ 2 + merits
     end
 
     TPGain = TPGain * 10
