@@ -5,7 +5,6 @@
 -- Recast Time: 8 seconds
 -- Duration: Instant
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/ability")
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -30,16 +29,16 @@ function onUseAbility(caster,target,ability,action)
 
         caster:setLocalVar("corsairActiveRoll", du_effect:getSubType())
 
-        if caster:getStatusEffect(tpz.effect.SNAKE_EYE) then
+        if caster:hasStatusEffect(tpz.effect.SNAKE_EYE) then
             roll = roll + 1
 
             caster:delStatusEffect(tpz.effect.SNAKE_EYE)
         else
-            roll = roll + math.random(1,6)
+            roll = roll + math.random(1, 6)
         end
 
         if roll >= 11 then
-            roll = math.min(roll,12) -- Cap roll
+            roll = math.min(roll, 12) -- Cap roll
 
             caster:delStatusEffectSilent(tpz.effect.DOUBLE_UP_CHANCE)
         end
