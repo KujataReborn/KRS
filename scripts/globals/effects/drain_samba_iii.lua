@@ -1,9 +1,7 @@
 -----------------------------------
 --
------------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
-require("scripts/globals/magic")
+-- tpz.effect.DRAIN_SAMBA
+--
 -----------------------------------
 
 function onEffectGain(target,effect)

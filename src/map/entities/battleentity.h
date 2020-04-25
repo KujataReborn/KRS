@@ -503,6 +503,7 @@ public:
     bool            isAlive();
     bool            isInAssault();
     bool            isInDynamis();
+    bool            isDualWielding();
     bool            hasImmunity(uint32 imID);
     bool            isAsleep();
     bool            isMounted();
