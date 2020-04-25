@@ -15,7 +15,7 @@ end;
 
 function onTrigger(player,npc)
     if (player:hasKeyItem(tpz.ki.TENSHODO_MEMBERS_CARD)) then
-        if (player:sendGuild(60431, 1, 23, 7)) then
+        if (player:sendGuild(60425, 1, 23, 7)) then
             player:showText(npc,ID.text.TSUTSUROON_SHOP_DIALOG);
         end
     else
