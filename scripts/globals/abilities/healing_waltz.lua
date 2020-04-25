@@ -42,5 +42,7 @@ function onUseAbility(player,target,ability)
         ability:setMsg(tpz.msg.basic.JA_REMOVE_EFFECT)
     end
 
+    player:addRecast(tpz.recast.ABILITY, 217, ability:getRecast()) -- Waltzes
+
     return effect
 end

@@ -56,6 +56,8 @@ function onUseAbility(player,target,ability)
     target:restoreHP(cure)
     target:wakeUp()
     player:updateEnmityFromCure(target,cure)
+    
+    player:addRecast(tpz.recast.ABILITY, 217, ability:getRecast()) -- Waltzes
 
     return cure
 end
