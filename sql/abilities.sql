@@ -212,7 +212,7 @@ INSERT INTO `abilities` VALUES (172,'aspir_samba_ii',19,60,1,60,216,0,0,4,2000,0
 INSERT INTO `abilities` VALUES (173,'haste_samba',19,45,1,60,216,0,0,5,2000,0,14,20.0,0,1,300,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (174,'curing_waltz',19,15,27,6,217,306,0,6,2000,0,14,20.0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (175,'curing_waltz_ii',19,30,27,8,217,306,0,7,2000,0,14,20.0,0,0,0,0,0,'WOTG');
-INSERT INTO `abilities` VALUES (176,'curing_waltz_iii',19,45,27,10,217,306,0,8,2000,0,14,20.0,0,0,0,0,0,'WOTG');
+INSERT INTO `abilities` VALUES (176,'curing_waltz_iii',19,50,27,10,217,306,0,8,2000,0,14,20.0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (177,'curing_waltz_iv',19,70,27,17,217,306,0,9,2000,0,14,20.0,0,0,0,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (178,'healing_waltz',19,35,27,15,217,0,0,10,2000,0,14,20.0,0,1,300,0,0,'WOTG');
 INSERT INTO `abilities` VALUES (179,'divine_waltz',19,25,27,13,217,306,0,11,2000,0,14,20.0,1,0,0,0,0,'WOTG');
