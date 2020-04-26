@@ -11,7 +11,7 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    if player:sendGuild(60431, 8, 23, 5) then
+    if player:sendGuild(60431, 8, 23, 6) then
         player:showText(npc, ID.text.GATHWEEDA_SHOP_DIALOG)
     end
 end
