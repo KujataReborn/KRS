@@ -119,8 +119,8 @@ bool CBattleEntity::isInAssault()
 
 bool CBattleEntity::isDualWielding()
 {
-    if (m_Weapons[SLOT_SUB]->getDmgType() > 0 &&
-            m_Weapons[SLOT_SUB]->getDmgType() < 4)
+    auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]);
+    if (subweapon && subweapon->getDmgType() > 0 && subweapon->getDmgType() < 4)
     {
         return true;
     }
