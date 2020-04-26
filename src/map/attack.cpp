@@ -375,8 +375,8 @@ bool CAttack::CheckAnticipated()
         {
             //increment power and don't remove
             effect->SetPower(effect->GetPower() + 1);
-            //chance to counter - 25% base
-            if (tpzrand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
+            //chance to counter - 15% base
+            if (tpzrand::GetRandomNumber(100) < 15)
             {
 
                 if (m_victim->PAI->IsEngaged())
@@ -423,15 +423,7 @@ bool CAttack::CheckCounter()
     }
 
     //counter check (rate AND your hit rate makes it land, else its just a regular hit)
-    //having seigan active gives chance to counter at 25% of the zanshin proc rate
-    uint16 seiganChance = 0;
-    if (m_victim->objtype == TYPE_PC && m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN))
-    {
-        seiganChance = m_victim->getMod(Mod::ZANSHIN) + ((CCharEntity*)m_victim)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)m_victim);
-        seiganChance = std::clamp<uint16>(seiganChance, 0, 100);
-        seiganChance /= 4;
-    }
-    if ((tpzrand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) || tpzrand::GetRandomNumber(100) < seiganChance) &&
+    if (tpzrand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) &&
         isFaceing(m_victim->loc.p, m_attacker->loc.p, 40) && tpzrand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
     {
         m_isCountered = true;
