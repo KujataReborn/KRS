@@ -136,7 +136,7 @@ INSERT INTO `merits` VALUES (1088,'third_eye_recast',5,2,2048,6,16);
 INSERT INTO `merits` VALUES (1090,'warding_circle_recast',5,20,2048,6,16);
 INSERT INTO `merits` VALUES (1092,'store_tp_effect',5,2,2048,6,16);
 INSERT INTO `merits` VALUES (1094,'meditate_recast',5,6,2048,6,16);
-INSERT INTO `merits` VALUES (1096,'zashin_attack_rate',5,1,2048,6,16);
+INSERT INTO `merits` VALUES (1096,'zanshin_attack_rate',5,1,2048,6,16);
 INSERT INTO `merits` VALUES (1152,'subtle_blow_effect',5,1,4096,6,17);
 INSERT INTO `merits` VALUES (1154,'katon_effect',5,2,4096,6,17);
 INSERT INTO `merits` VALUES (1156,'hyoton_effect',5,2,4096,6,17);
