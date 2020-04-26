@@ -4,9 +4,9 @@
 --  Guild Merchant: Alchemist Guild
 -- !pos -76.836 -6.000 140.331 50
 -----------------------------------
+local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 require("scripts/globals/settings")
 require("scripts/globals/shop")
-local ID = require("scripts/zones/Aht_Urhgan_Whitegate/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)

@@ -5,20 +5,17 @@
 -- !pos 108.473 5.017 1.089 234
 -----------------------------------
 local ID = require("scripts/zones/Bastok_Mines/IDs")
-require("scripts/globals/shop")
-require("scripts/globals/crafting")
 require("scripts/globals/settings")
-require("scripts/globals/status")
+require("scripts/globals/shop")
 -----------------------------------
 
 function onTrade(player, npc, trade)
 end
 
 function onTrigger(player,npc)
-    local guildRank = player:getSkillRank(tpz.skill.ALCHEMY)
-    local stock = tpz.shop.generalGuildStock[guild.alchemy]
-    tpz.shop.generalGuild(player, stock, guildRank)
-    player:showText(npc,ID.text.ODOBA_SHOP_DIALOG)
+    if player:sendGuild(526, 8, 23, 6) then
+        player:showText(npc, ID.text.ODOBA_SHOP_DIALOG)
+    end
 end
 
 function onEventUpdate(player, csid,option)
