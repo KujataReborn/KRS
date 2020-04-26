@@ -1041,7 +1041,7 @@ namespace battleutils
 
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
-                    int8 Samba = dsprand::GetRandomNumber(1, (delay * power) / 100 + 1);
+                    int8 Samba = tpzrand::GetRandomNumber(1, (delay * power) / 100 + 1);
 
                     // retail testing showed there was no level correction to Samba Drain ammounts.
                     // vary damage based on lvl diff
@@ -1079,7 +1079,7 @@ namespace battleutils
                 }
                 else if (daze == EFFECT_ASPIR_DAZE)
                 {
-                    int8 Samba = dsprand::GetRandomNumber(1, (delay * power) / 100 + 1);
+                    int8 Samba = tpzrand::GetRandomNumber(1, (delay * power) / 100 + 1);
 
                     if (Samba >= finaldamage / 4) { Samba = finaldamage / 4; }
 
