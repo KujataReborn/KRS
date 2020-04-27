@@ -84,7 +84,7 @@ namespace conquest
             Sql_GetIntData(SqlHandle, 3),
         };
 
-        if (influences[nation] == 5000)
+        if (influences[nation] == 12000)
             return;
 
         auto lost = 0;
@@ -94,8 +94,8 @@ namespace conquest
             {
                 continue;
             }
-
-            auto loss = std::min<int>(points * influences[i] / (5000 - influences[nation]), influences[i]);
+			// round up all influence changes
+            auto loss = std::min<int>(1 + points * influences[i] / (12000 - influences[nation]), influences[i]);
             influences[i] -= loss;
             lost += loss;
         }
@@ -124,10 +124,9 @@ namespace conquest
     *    +x point for beastmen                                              *
     ************************************************************************/
 
-    void LoseInfluencePoints(CCharEntity* PChar)
+    void LoseInfluencePoints(CCharEntity* PChar, uint8 points)
     {
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
-        int points = 0;
 
         switch (region)
         {
@@ -135,7 +134,7 @@ namespace conquest
             case REGION_GUSTABERG:
             case REGION_SARUTABARUTA:
             {
-                points = 10;
+                points = std::min<int>(points, 25);
                 break;
             }
             case REGION_ZULKHEIM:
@@ -144,7 +143,7 @@ namespace conquest
             case REGION_DERFLAND:
             case REGION_ARAGONEU:
             {
-                points = 50;
+                points = std::min<int>(points, 50);
                 break;
             }
             case REGION_QUFIMISLAND:
@@ -152,7 +151,7 @@ namespace conquest
             case REGION_KUZOTZ:
             case REGION_ELSHIMOLOWLANDS:
             {
-                points = 75;
+                points = std::min<int>(points, 100);
                 break;
             }
             case REGION_VOLLBOW:
@@ -160,14 +159,14 @@ namespace conquest
             case REGION_FAUREGANDI:
             case REGION_ELSHIMOUPLANDS:
             {
-                points = 300;
+                points = std::min<int>(points, 200);
                 break;
             }
             case REGION_TULIA:
             case REGION_MOVALPOLOS:
             case REGION_TAVNAZIA:
             {
-                points = 600;
+                //effective cap is 240, based on maximum exp loss
                 break;
             }
             default:
@@ -212,22 +211,22 @@ namespace conquest
             int64 total = san_inf + bas_inf + win_inf;
 
             //Sandoria
-            if (san_inf >= total * 0.65)	  offset = 3;
-            else if (san_inf >= total * 0.5)  offset = 2;
-            else if (san_inf >= total * 0.25) offset = 1;
-            else							  offset = 0;
+            if (san_inf >= total * 0.55)                        offset = 3;
+            else if (san_inf >= bas_inf && san_inf >= win_inf)  offset = 2;
+            else if (san_inf >= total * 0.25)                   offset = 1;
+            else                                                offset = 0;
 
             //Bastok
-            if (bas_inf >= total * 0.65)	  offset += 12;
-            else if (bas_inf >= total * 0.5)  offset += 8;
-            else if (bas_inf >= total * 0.25) offset += 4;
-            else							  offset += 0;
+            if (bas_inf >= total * 0.55)                        offset += 12;
+            else if (bas_inf >= san_inf && bas_inf >= win_inf)  offset += 8;
+            else if (bas_inf >= total * 0.25)                   offset += 4;
+            else                                                offset += 0;
 
             //Windurst
-            if (win_inf >= total * 0.65)	  offset += 48;
-            else if (win_inf >= total * 0.5)  offset += 32;
-            else if (win_inf >= total * 0.25) offset += 16;
-            else							  offset += 0;
+            if (win_inf >= total * 0.55)                        offset += 48;
+            else if (win_inf >= san_inf && win_inf >= bas_inf)  offset += 32;
+            else if (win_inf >= total * 0.25)                   offset += 16;
+            else                                                offset += 0;
 
             return offset;
         }
@@ -587,7 +586,7 @@ namespace conquest
             uint32 points = (uint32)(exp * percentage);
 
             charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), points);
-            GainInfluencePoints(PChar, points/2);
+            GainInfluencePoints(PChar, points);
         }
         return 0; // added conquest points (пока не вижу в этом определенного смысла)
     }
