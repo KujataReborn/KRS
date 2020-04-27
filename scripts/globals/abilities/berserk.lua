@@ -2,10 +2,9 @@
 -- Ability: Berserk
 -- Enhances attacks but weakens defense.
 -- Obtained: Warrior Level 15
--- Recast Time: 5:00
--- Duration: 3:00
+-- Recast Time: 00:05:00
+-- Duration: 00:03:00
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -14,7 +13,9 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(tpz.effect.BERSERK,25 + player:getMod(tpz.mod.BERSERK_EFFECT),0,180 + player:getMod(tpz.mod.BERSERK_DURATION))
+    local power = 25 + player:getMod(tpz.mod.BERSERK_EFFECT)
+    local duration = 180 + player:getMod(tpz.mod.BERSERK_DURATION)
+    player:addStatusEffect(tpz.effect.BERSERK, power, 0, duration)
 
     return tpz.effect.BERSERK
 end
