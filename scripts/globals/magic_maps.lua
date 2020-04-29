@@ -1,270 +1,162 @@
 ---------------------------------------------
---
 --    Function that all map NPCS use.
---    SE updated the map NPCs to sell maps from the normal areas, RoZ, and CoP areas (Update was in Nov 5, 2013)
+---------------------------------------------
+require("scripts/globals/keyitems")
+require("scripts/globals/settings")
+require("scripts/globals/zone")
 ---------------------------------------------
 
-require("scripts/globals/keyitems")
+tpz = tpz or {}
+tpz.maps = tpz.maps or {}
 
-local Maps = {tpz.ki.MAP_OF_THE_SAN_DORIA_AREA, tpz.ki.MAP_OF_THE_BASTOK_AREA, tpz.ki.MAP_OF_THE_WINDURST_AREA, tpz.ki.MAP_OF_THE_JEUNO_AREA, tpz.ki.MAP_OF_ORDELLES_CAVES, tpz.ki.MAP_OF_GHELSBA, tpz.ki.MAP_OF_DAVOI, tpz.ki.MAP_OF_CARPENTERS_LANDING, tpz.ki.MAP_OF_THE_ZERUHN_MINES,
-    tpz.ki.MAP_OF_THE_PALBOROUGH_MINES, tpz.ki.MAP_OF_BEADEAUX, tpz.ki.MAP_OF_GIDDEUS, tpz.ki.MAP_OF_CASTLE_OZTROJA, tpz.ki.MAP_OF_THE_MAZE_OF_SHAKHRAMI, tpz.ki.MAP_OF_THE_LITELOR_REGION, tpz.ki.MAP_OF_BIBIKI_BAY, tpz.ki.MAP_OF_QUFIM_ISLAND, tpz.ki.MAP_OF_THE_ELDIEME_NECROPOLIS,
-    tpz.ki.MAP_OF_THE_GARLAIGE_CITADEL, tpz.ki.MAP_OF_THE_ELSHIMO_REGIONS, tpz.ki.MAP_OF_THE_NORTHLANDS_AREA, tpz.ki.MAP_OF_KING_RANPERRES_TOMB, tpz.ki.MAP_OF_THE_DANGRUF_WADI, tpz.ki.MAP_OF_THE_HORUTOTO_RUINS, tpz.ki.MAP_OF_BOSTAUNIEUX_OUBLIETTE,
-    tpz.ki.MAP_OF_THE_TORAIMARAI_CANAL, tpz.ki.MAP_OF_THE_GUSGEN_MINES, tpz.ki.MAP_OF_THE_CRAWLERS_NEST, tpz.ki.MAP_OF_THE_RANGUEMONT_PASS, tpz.ki.MAP_OF_DELKFUTTS_TOWER, tpz.ki.MAP_OF_FEIYIN, tpz.ki.MAP_OF_CASTLE_ZVAHL, tpz.ki.MAP_OF_THE_KUZOTZ_REGION,
-    tpz.ki.MAP_OF_THE_RUAUN_GARDENS, tpz.ki.MAP_OF_NORG, tpz.ki.MAP_OF_THE_TEMPLE_OF_UGGALEPIH, tpz.ki.MAP_OF_THE_DEN_OF_RANCOR, tpz.ki.MAP_OF_THE_KORROLOKA_TUNNEL, tpz.ki.MAP_OF_THE_KUFTAL_TUNNEL, tpz.ki.MAP_OF_THE_BOYAHDA_TREE, tpz.ki.MAP_OF_THE_VELUGANNON_PALACE,
-    tpz.ki.MAP_OF_IFRITS_CAULDRON, tpz.ki.MAP_OF_THE_QUICKSAND_CAVES, tpz.ki.MAP_OF_THE_SEA_SERPENT_GROTTO, tpz.ki.MAP_OF_THE_VOLLBOW_REGION, tpz.ki.MAP_OF_THE_LABYRINTH_OF_ONZOZO, tpz.ki.MAP_OF_THE_ULEGUERAND_RANGE, tpz.ki.MAP_OF_THE_ATTOHWA_CHASM, tpz.ki.MAP_OF_PSOXJA,
-    tpz.ki.MAP_OF_OLDTON_MOVALPOLOS, tpz.ki.MAP_OF_NEWTON_MOVALPOLOS, tpz.ki.MAP_OF_TAVNAZIA, tpz.ki.MAP_OF_THE_AQUEDUCTS, tpz.ki.MAP_OF_THE_SACRARIUM, tpz.ki.MAP_OF_CAPE_RIVERNE, tpz.ki.MAP_OF_ALTAIEU, tpz.ki.MAP_OF_HUXZOI, tpz.ki.MAP_OF_RUHMET, tpz.ki.MAP_OF_AL_ZAHBI, tpz.ki.MAP_OF_NASHMAU,
-    tpz.ki.MAP_OF_WAJAOM_WOODLANDS, tpz.ki.MAP_OF_CAEDARVA_MIRE, tpz.ki.MAP_OF_MOUNT_ZHAYOLM, tpz.ki.MAP_OF_AYDEEWA_SUBTERRANE, tpz.ki.MAP_OF_MAMOOK, tpz.ki.MAP_OF_HALVUNG, tpz.ki.MAP_OF_ARRAPAGO_REEF, tpz.ki.MAP_OF_ALZADAAL_RUINS, tpz.ki.MAP_OF_BHAFLAU_THICKETS,
-    tpz.ki.MAP_OF_VUNKERL_INLET, tpz.ki.MAP_OF_GRAUBERG, tpz.ki.MAP_OF_FORT_KARUGONARUGO}
+local maps = {
+    [1] = {
+        [ 1] = { ki = tpz.ki.MAP_OF_THE_SAN_DORIA_AREA, price = 200 },
+        [ 2] = { ki = tpz.ki.MAP_OF_THE_BASTOK_AREA, price = 200 },
+        [ 3] = { ki = tpz.ki.MAP_OF_THE_WINDURST_AREA, price = 200 },
+        [ 4] = { ki = tpz.ki.MAP_OF_THE_JEUNO_AREA, price = 200 },
+        [ 5] = { ki = tpz.ki.MAP_OF_ORDELLES_CAVES, price = 200 },
+        [ 6] = { ki = tpz.ki.MAP_OF_GHELSBA, price = 200 },
+        [ 7] = { ki = tpz.ki.MAP_OF_DAVOI, price = 200 },
+        [ 8] = { ki = tpz.ki.MAP_OF_CARPENTERS_LANDING, price = 200 },
+        [ 9] = { ki = tpz.ki.MAP_OF_THE_ZERUHN_MINES, price = 200 },
+        [10] = { ki = tpz.ki.MAP_OF_THE_PALBOROUGH_MINES, price = 200 },
+        [11] = { ki = tpz.ki.MAP_OF_BEADEAUX, price = 200 },
+        [12] = { ki = tpz.ki.MAP_OF_GIDDEUS, price = 200 },
+        [13] = { ki = tpz.ki.MAP_OF_CASTLE_OZTROJA, price = 200 },
+        [14] = { ki = tpz.ki.MAP_OF_THE_MAZE_OF_SHAKHRAMI, price = 200 },
+        [15] = { ki = tpz.ki.MAP_OF_THE_LITELOR_REGION, price = 200 },
+        [16] = { ki = tpz.ki.MAP_OF_BIBIKI_BAY, price = 200 },
+        [17] = { ki = tpz.ki.MAP_OF_QUFIM_ISLAND, price = 200 },
+        [18] = { ki = tpz.ki.MAP_OF_THE_ELDIEME_NECROPOLIS, price = 200 },
+        [19] = { ki = tpz.ki.MAP_OF_THE_GARLAIGE_CITADEL, price = 200 },
+        [20] = { ki = tpz.ki.MAP_OF_THE_ELSHIMO_REGIONS, price = 200 },
+        [21] = { ki = tpz.ki.MAP_OF_THE_NORTHLANDS_AREA, price = 200 },
+        [22] = { ki = tpz.ki.MAP_OF_KING_RANPERRES_TOMB, price = 200 },
+        [23] = { ki = tpz.ki.MAP_OF_THE_DANGRUF_WADI, price = 200 },
+        [24] = { ki = tpz.ki.MAP_OF_THE_HORUTOTO_RUINS, price = 200 },
+        [25] = { ki = tpz.ki.MAP_OF_BOSTAUNIEUX_OUBLIETTE, price = 200 },
+        [26] = { ki = tpz.ki.MAP_OF_THE_TORAIMARAI_CANAL, price = 200 },
+        [27] = { ki = tpz.ki.MAP_OF_THE_GUSGEN_MINES, price = 200 },
+        [28] = { ki = tpz.ki.MAP_OF_THE_CRAWLERS_NEST, price = 200 },
+        [29] = { ki = tpz.ki.MAP_OF_THE_RANGUEMONT_PASS, price = 200 },
+        [30] = { ki = tpz.ki.MAP_OF_DELKFUTTS_TOWER, price = 200 },
+        [31] = { ki = tpz.ki.MAP_OF_FEIYIN, price = 200 },
+        [32] = { ki = tpz.ki.MAP_OF_CASTLE_ZVAHL, price = 200 },
+    },
+    [2] = {
+        [33] = { ki = tpz.ki.MAP_OF_THE_KUZOTZ_REGION, price = 200 },
+        [34] = { ki = tpz.ki.MAP_OF_THE_RUAUN_GARDENS, price = 200 },
+        [35] = { ki = tpz.ki.MAP_OF_NORG, price = 200 },
+        [36] = { ki = tpz.ki.MAP_OF_THE_TEMPLE_OF_UGGALEPIH, price = 200 },
+        [37] = { ki = tpz.ki.MAP_OF_THE_DEN_OF_RANCOR, price = 200 },
+        [38] = { ki = tpz.ki.MAP_OF_THE_KORROLOKA_TUNNEL, price = 200 },
+        [39] = { ki = tpz.ki.MAP_OF_THE_KUFTAL_TUNNEL, price = 200 },
+        [40] = { ki = tpz.ki.MAP_OF_THE_BOYAHDA_TREE, price = 200 },
+        [41] = { ki = tpz.ki.MAP_OF_THE_VELUGANNON_PALACE, price = 200 },
+        [42] = { ki = tpz.ki.MAP_OF_IFRITS_CAULDRON, price = 200 },
+        [43] = { ki = tpz.ki.MAP_OF_THE_QUICKSAND_CAVES, price = 200 },
+        [44] = { ki = tpz.ki.MAP_OF_THE_SEA_SERPENT_GROTTO, price = 200 },
+        [45] = { ki = tpz.ki.MAP_OF_THE_VOLLBOW_REGION, price = 200 },
+        [46] = { ki = tpz.ki.MAP_OF_THE_LABYRINTH_OF_ONZOZO, price = 200 },
+        [47] = { ki = tpz.ki.MAP_OF_THE_ULEGUERAND_RANGE, price = 200 },
+        [48] = { ki = tpz.ki.MAP_OF_THE_ATTOHWA_CHASM, price = 200 },
+        [49] = { ki = tpz.ki.MAP_OF_PSOXJA, price = 200 },
+        [50] = { ki = tpz.ki.MAP_OF_OLDTON_MOVALPOLOS, price = 200 },
+        [51] = { ki = tpz.ki.MAP_OF_NEWTON_MOVALPOLOS, price = 200 },
+        [52] = { ki = tpz.ki.MAP_OF_TAVNAZIA, price = 200 },
+        [53] = { ki = tpz.ki.MAP_OF_THE_AQUEDUCTS, price = 200 },
+        [54] = { ki = tpz.ki.MAP_OF_THE_SACRARIUM, price = 200 },
+        [55] = { ki = tpz.ki.MAP_OF_CAPE_RIVERNE, price = 200 },
+        [56] = { ki = tpz.ki.MAP_OF_ALTAIEU, price = 200 },
+        [57] = { ki = tpz.ki.MAP_OF_HUXZOI, price = 200 },
+        [58] = { ki = tpz.ki.MAP_OF_RUHMET, price = 200 },
+        [59] = { ki = tpz.ki.MAP_OF_AL_ZAHBI, price = 200 },
+        [60] = { ki = tpz.ki.MAP_OF_NASHMAU, price = 200 },
+        [61] = { ki = tpz.ki.MAP_OF_WAJAOM_WOODLANDS, price = 200 },
+        [62] = { ki = tpz.ki.MAP_OF_CAEDARVA_MIRE, price = 200 },
+        [63] = { ki = tpz.ki.MAP_OF_MOUNT_ZHAYOLM, price = 200 },
+        [64] = { ki = tpz.ki.MAP_OF_AYDEEWA_SUBTERRANE, price = 200 },
+    },
+    [3] = {
+        [65] = { ki = tpz.ki.MAP_OF_MAMOOK, price = 200 },
+        [66] = { ki = tpz.ki.MAP_OF_HALVUNG, price = 200 },
+        [67] = { ki = tpz.ki.MAP_OF_ARRAPAGO_REEF, price = 200 },
+        [68] = { ki = tpz.ki.MAP_OF_ALZADAAL_RUINS, price = 200 },
+        [69] = { ki = tpz.ki.MAP_OF_BHAFLAU_THICKETS, price = 200 },
+        [70] = { ki = tpz.ki.MAP_OF_VUNKERL_INLET, price = 200 },
+        [71] = { ki = tpz.ki.MAP_OF_GRAUBERG, price = 200 },
+        [72] = { ki = tpz.ki.MAP_OF_FORT_KARUGONARUGO, price = 200 },
+    }
+}
 
-local Uoption = {    --User option selected.
-    1,            --SanDoria Area
-    65537,        --Bastok Area
-    131073,        --Windurst Area
-    196609,        --Jeuno Area
-    262145,        --Ordelles Caves
-    327681,        --Ghelsba
-    393217,        --Davoi
-    458753,        --Carpenters Landing
-    524289,        --Zeruhn Mines
-    589825,        --Palborough Mines
-    655361,        --Beadeaux
-    720897,        --Giddeus
-    786433,        --Castle Oztroja
-    851969,        --Maze of Shakhrami
-    917505,        --Li'Telor Region
-    983041,        --Bibiki Bay
-    1048577,    --Qufim Island
-    1114113,    --Eldieme Necropolis
-    1179649,    --Garlaige Citadel
-    1245185,    --Elshimo Regions
-    1310721,    --Northlands Area
-    1376257,    --King Ranperres Tomb
-    1441793,    --Dangruf Wadi
-    1507329,    --Horutoto Ruins
-    1572865,    --Bostaunieux Oubliette
-    1638401,    --Toraimarai Canal
-    1703937,    --Gusgen Mines
-    1769473,    --Crawlers Nest
-    1835009,    --Ranguemont Pass
-    1900545,    --Delkfutts Tower
-    1966081,    --Feiyin
-    2031617,    --Castle Zvahl
-    2097153,    --Kuzotz region
-    2162689,    --Ru'Aun Gardens
-    2228225,    --Norg
-    2293761,    --Temple of Uggalepih
-    2359297,    --Den of Rancor
-    2424833,    --Korroloka Tunnel
-    2490369,    --Kuftal Tunnel
-    2555905,    --Boyahda Tree
-    2621441,    --Ve'Lugannon Palace
-    2686977,    --Ifrit's Cauldron
-    2752513,    --Quicksand Caves
-    2818049,    --Sea Serpent Grotto
-    2883585,    --Vollbow region
-    2949121,    --Labyrinth of Onzozo
-    3014657,    --Uleguerand Range
-    3080193,    --Attohwa Chasm
-    3145729,    --Pso'Xja
-    3211265,    --Oldton Movalpolos
-    3276801,    --Newton Movalpolos
-    3342337,    --Tavnazia
-    3407873,    --Aqueducts
-    3473409,    --Sacrarium
-    3538945,    --Cape Riverne
-    3604481,    --Al'Taieu
-    3670017,    --Hu'Xzoi
-    3735553,    --Ru'Hmet
-    3801089,    --Al Zahbi
-    3866625,    --Nashmau
-    3932161,    --Wajaom Woodlands
-    3997697,    --Caedarva Mire
-    4063233,    --Mount Zhayolm
-    4128769,    --Aydeewa Subterrane
-    4194305,    --Mamook
-    4259841,    --Halvung
-    4325377,    --Arrapago Reef
-    4390913,    --Alzadall Ruins
-    4456449,    --Bhaflau Thickets
-    4521985,    --Vunkerl Inlet
-    4587521,    --Grauberg
-    4653057        --Fort Karugo-Narugo
-    }
+local defaults = {
+    [tpz.zone.BASTOK_MARKETS]       = { -1808, -1, 255 },      -- Karine
+    [tpz.zone.PORT_BASTOK]          = { -1808, -1, 255 },      -- Rex
+    [tpz.zone.NORTHERN_SAN_DORIA]   = { -256, -1, 255 },       -- Elesca
+    [tpz.zone.SOUTHERN_SAN_DORIA]   = { -256, -1, 255 },       -- Violitte
+    [tpz.zone.PORT_WINDURST]        = { -14352, -1, 255 },     -- Mhoji Roccoruh
+    [tpz.zone.WINDURST_WOODS]       = { -14352, -1, 255 },     -- Pehki Machumaht
+    [tpz.zone.MHAURA]               = { -49168, -1, 255 },     -- Ludwig
+    [tpz.zone.SELBINA]              = { -16, -1, 255 },        -- Lombaria
+    [tpz.zone.LOWER_JEUNO]          = { -983056, -1, 255 },    -- Promurouve
+    [tpz.zone.UPPER_JEUNO]          = { -983056, -1, 255 },    -- Rusese
+    [tpz.zone.AHT_URHGAN_WHITEGATE] = { -1, 3825205247, 239 }, -- Riyadahf
+}
 
---Groups maps by price, based off the user option.
-local p2 = { --Maps that are price at 200 gil
-    Uoption[1],        --SanDoria Area
-    Uoption[2],        --Bastok Area
-    Uoption[3],        --Windurst Area
-    Uoption[9]        --Zeruhn Mines
-    }
-local p6 = { --Maps that are price at 600 gil
-    Uoption[4],        --Jeuno Area
-    Uoption[5],        --Ordelles Caves
-    Uoption[6],        --Ghelsba
-    Uoption[10],    --Palborough Mines
-    Uoption[11],    --Beadeaux
-    Uoption[12],    --Giddeus
-    Uoption[14],    --Maze of Shakhrami
-    Uoption[22],    --King Ranperres Tomb
-    Uoption[23],    --Dangruf Wadi
-    Uoption[24],    --Horutoto Ruins
-    Uoption[27],    --Gusgen Mines
-    Uoption[59]        --Al Zahbi
-    }
-local p3 = {    --Maps that are price at 3000 gil
-    Uoption[7],        --Davoi
-    Uoption[8],        --Carpenters Landing
-    Uoption[13],    --Castle Oztroja
-    Uoption[15],    --Li'Telor Region
-    Uoption[16],    --Bibiki Bay
-    Uoption[17],    --Qufim Island
-    Uoption[18],    --Eldieme Necropolis
-    Uoption[19],    --Garlaige Citadel
-    Uoption[20],    --Elshimo Regions
-    Uoption[21],    --Northlands Area
-    Uoption[25],    --Bostaunieux Oubliette
-    Uoption[26],    --Toraimarai Canal
-    Uoption[28],    --Crawlers Nest
-    Uoption[29],    --Ranguemont Pass
-    Uoption[30],    --Delkfutts Tower
-    Uoption[31],    --Feiyin
-    Uoption[32],    --Castle Zvahl
-    Uoption[33],    --Kuzotz region
-    Uoption[34],    --Ru'Aun Gardens
-    Uoption[35],    --Norg
-    Uoption[36],    --Temple of Uggalepih
-    Uoption[37],    --Den of Rancor
-    Uoption[38],    --Korroloka Tunnel
-    Uoption[39],    --Kuftal Tunnel
-    Uoption[40],    --Boyahda Tree
-    Uoption[41],    --Ve'Lugannon Palace
-    Uoption[42],    --Ifrit's Cauldron
-    Uoption[43],    --Quicksand Caves
-    Uoption[44],    --Sea Serpent Grotto
-    Uoption[45],    --Vollbow region
-    Uoption[46],    --Labyrinth of Onzozo
-    Uoption[47],    --Uleguerand Range
-    Uoption[48],    --Attohwa Chasm
-    Uoption[49],    --Pso'Xja
-    Uoption[50],    --Oldton Movalpolos
-    Uoption[51],    --Newton Movalpolos
-    Uoption[52],    --Tavnazia
-    Uoption[53],    --Aqueducts
-    Uoption[54],    --Sacrarium
-    Uoption[55],    --Cape Riverne
-    Uoption[56],    --Al'Taieu
-    Uoption[57],    --Hu'Xzoi
-    Uoption[58],    --Ru'Hmet
-    Uoption[60],    --Nashmau
-    Uoption[61],    --Wajaom Woodlands
-    Uoption[62],    --Caedarva Mire
-    Uoption[63],    --Mount Zhayolm
-    Uoption[64],    --Aydeewa Subterrane
-    Uoption[65],    --Mamook
-    Uoption[66],    --Halvung
-    Uoption[67],    --Arrapago Reef
-    Uoption[68],    --Alzadall Ruins
-    Uoption[69]        --Bhaflau Thickets
-    }
-local p30 = { --Maps that are price at 30,000 gil
-    Uoption[70],    --Vunkerl Inlet
-    Uoption[71],    --Grauberg
-    Uoption[72]        --Fort Karugo-Narugo
-    }
+local function filterOwnedMaps(player)
+    local p1 = 0
+    local p2 = 0
+    local p3 = 0
 
-function CheckMaps(player, npc, csid)
-    local i = 0
-    local mapVar1 = 0
-    local mapVar2 = 0
-    local mapVar3 = 0
-
-    while i <= 31 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar1 = bit.bor(mapVar1, bit.lshift(1,i))
-        end
-        i = i + 1
+    if not ENABLE_SELLING_QUESTED_MAPS then
+        local zone = player:getZoneID()
+        p1 = defaults[zone][1]
+        p2 = defaults[zone][2]
+        p3 = defaults[zone][3]
     end
 
-    while i <= 63 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar2 = bit.bor(mapVar2, bit.lshift(1,i))
+    for index, map in ipairs(maps[1]) do
+        if player:hasKeyItem(map.ki) then
+            p1 = bit.bor(p1, bit.lshift(1, index - 1))
         end
-        i = i + 1
     end
 
-    while i <= 71 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar3 = bit.bor(mapVar3, bit.lshift(1,i))
+    for index, map in ipairs(maps[2]) do
+        if player:hasKeyItem(map.ki) then
+            p2 = bit.bor(p2, bit.lshift(1, index - 1))
         end
-        i = i + 1
     end
 
-    player:startEvent(csid, mapVar1, mapVar2, mapVar3)
+    for index, map in ipairs(maps[3]) do
+        if player:hasKeyItem(map.ki) then
+            p3 = bit.bor(p3, bit.lshift(1, index - 1))
+        end
+    end
+
+    return p1, p2, p3
+end
+    
+tpz.maps.displayMaps = function(csid,player)
+    local p1, p2, p3 = filterOwnedMaps(player)
+
+    player:startEvent(csid, p1, p2, p3)
 end
 
-function CheckMapsUpdate (player, option, NOT_HAVE_ENOUGH_GIL, KEYITEM_OBTAINED)
-    local price = 0
-    local MadePurchase = false
-    local KI = 0
-    local i = 0
-    local mapVar1 = 0
-    local mapVar2 = 0
-    local mapVar3 = 0
+tpz.maps.updateMaps = function(player,option,ID)
+    local offset = 65536
+    local index = 1 + math.floor(option / offset)
+    local map = maps[1][index] or maps[2][index] or maps[3][index]
 
-    while i <= 71 do
-        if (option == Uoption[i+1]) then
-            local x = 1
-            while x <= 53 do
-                if (x <= 4 and option == p2[x]) then
-                    price = 200
-                elseif (x <= 12 and option == p6[x]) then
-                    price = 600
-                elseif (x <= 53 and option == p3[x]) then
-                    price = 3000
-                elseif (x <= 3 and option == p30[x]) then
-                    price = 30000
-                end
-                x=x+1
-            end
-            MadePurchase = true
-            KI = Maps[i+1]
-        end
-        i = i + 1
+    if player:getGil() >= map.price then
+        player:delGil(map.price)
+        player:addKeyItem(map.ki)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, map.ki)
+    else
+        player:messageSpecial(ID.text.NOT_HAVE_ENOUGH_GIL)
     end
 
-    if (price > player:getGil()) then
-        player:messageSpecial(NOT_HAVE_ENOUGH_GIL)
-        MadePurchase = false
-        price = 0
-    elseif (price > 0 and MadePurchase == true) then
-        player:delGil(price)
-        MadePurchase = false
-        player:addKeyItem(KI)
-        player:messageSpecial(KEYITEM_OBTAINED, KI)
-    end
+    local p1, p2, p3 = filterOwnedMaps(player)
 
-    i=0
-    while i <= 31 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar1 = bit.bor(mapVar1, bit.lshift(1,i))
-        end
-        i = i + 1
-    end
-
-    while i <= 63 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar2 = bit.bor(mapVar2, bit.lshift(1,i))
-        end
-        i = i + 1
-    end
-
-    while i <= 71 do
-        if player:hasKeyItem(Maps[i+1]) then
-            mapVar3 = bit.bor(mapVar3, bit.lshift(1,i))
-        end
-        i = i + 1
-    end
-
-    player:updateEvent(mapVar1, mapVar2, mapVar3)
+    player:updateEvent(p1, p2, p3)
 end
