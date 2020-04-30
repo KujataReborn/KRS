@@ -17,11 +17,11 @@ local ChakraStatusEffects =
     PLAGUE       = 4
 }
 
-function onAbilityCheck(player, target, ability)
+function onAbilityCheck(player,target,ability)
     return 0, 0
 end
 
-function onUseAbility(player, target, ability)
+function onUseAbility(player,target,ability)
     local chakraRemoval = player:getMod(tpz.mod.CHAKRA_REMOVAL)
     for k, v in pairs(ChakraStatusEffects) do
         if bit.band(chakraRemoval, v) == v then
@@ -29,14 +29,17 @@ function onUseAbility(player, target, ability)
         end
     end
 
-    local recover = player:getStat(tpz.mod.VIT) * (2 + player:getMod(tpz.mod.CHAKRA_MULT) / 10) -- TODO: Figure out "function of level" addition (August 2017 update)
-    player:setHP(player:getHP() + recover)
+    local recover = player:getStat(tpz.mod.VIT) * (2 + player:getMod(tpz.mod.CHAKRA_MULT) / 10)
+    local diff = target:getMaxHP() - target:getHP()
+    recover = math.min(recover, diff)
+    player:addHP(recover)
 
     local merits = player:getMerit(tpz.merit.INVIGORATE)
     if merits > 0 then
         if player:hasStatusEffect(tpz.effect.REGEN) then
             player:delStatusEffect(tpz.effect.REGEN)
         end
+
         player:addStatusEffect(tpz.effect.REGEN, 10, 0, merits, 0, 0, 1)
     end
 
