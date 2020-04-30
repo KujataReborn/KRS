@@ -3,7 +3,7 @@
 -- Speeds up attacks.
 -- Obtained: Monk Level 1
 -- Recast Time: 02:00:00
--- Duration: 0:00:45
+-- Duration: 00:00:45
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
