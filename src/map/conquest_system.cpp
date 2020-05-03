@@ -128,7 +128,7 @@ namespace conquest
     {
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
 		
-        points *= GetRegionOwner(region) < 3 ? 1.5 : 1;
+        points *= (uint8)(GetRegionOwner(region) < 3 ? 1.5 : 1);
 
         switch (region)
         {
