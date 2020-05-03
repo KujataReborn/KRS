@@ -45,27 +45,24 @@ CGuildMenuBuyPacket::CGuildMenuBuyPacket(CCharEntity* PChar, CItemContainer* PGu
     {
         CItemShop* PItem = (CItemShop*)PGuild->GetItem(SlotID);
 
-		if (PItem->IsInMenu())
+		if (ItemCount == 30)
 		{
-			if (ItemCount == 30)
-			{
-                ref<uint8>(0xF4) = ItemCount;
-                ref<uint8>(0xF5) = (PacketCount == 0 ? 0x40 : PacketCount);
+			ref<uint8>(0xF4) = ItemCount;
+			ref<uint8>(0xF5) = (PacketCount == 0 ? 0x40 : PacketCount);
 
-                PChar->pushPacket(new CBasicPacket(*this));
+			PChar->pushPacket(new CBasicPacket(*this));
 
-                ItemCount = 0;
-                PacketCount++;
+			ItemCount = 0;
+			PacketCount++;
 
-                memset(data + 4, 0, PACKET_SIZE - 8);
-			}
-            ref<uint16>(0x08 * ItemCount + 0x04) = PItem->getID();
-            ref<uint8>(0x08 * ItemCount + 0x06) = PItem->getQuantity();
-            ref<uint8>(0x08 * ItemCount + 0x07) = PItem->getStackSize();
-            ref<uint32>(0x08 * ItemCount + 0x08) = PItem->getBasePrice();
+			memset(data + 4, 0, PACKET_SIZE - 8);
+		}
+		ref<uint16>(0x08 * ItemCount + 0x04) = PItem->getID();
+		ref<uint8>(0x08 * ItemCount + 0x06) = PItem->getQuantity();
+		ref<uint8>(0x08 * ItemCount + 0x07) = PItem->getStackSize();
+		ref<uint32>(0x08 * ItemCount + 0x08) = PItem->getBasePrice();
 
-            ItemCount++;
-        }
+		ItemCount++;
     }
     ref<uint8>(0xF4) = ItemCount;
     ref<uint8>(0xF5) = PacketCount + 0xC0;
