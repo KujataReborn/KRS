@@ -127,6 +127,8 @@ namespace conquest
     void LoseInfluencePoints(CCharEntity* PChar, uint8 points)
     {
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
+		
+        points *= GetRegionOwner(region) < 3 ? 1.5 : 1;
 
         switch (region)
         {
@@ -166,7 +168,7 @@ namespace conquest
             case REGION_MOVALPOLOS:
             case REGION_TAVNAZIA:
             {
-                //effective cap is 240, based on maximum exp loss
+                //effective cap is 360, based on maximum exp loss and region control
                 break;
             }
             default:
