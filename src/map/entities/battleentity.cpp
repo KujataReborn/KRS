@@ -714,11 +714,33 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 
 uint16 CBattleEntity::DEF()
 {
-    int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
-    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0)) {
-	return DEF / 2;
+    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
+    {
+        uint32 bonus = 0;
+        if (StatusEffectContainer->HasStatusEffect(EFFECT_MINNE))
+        {
+            if (CStatusEffect* PMinneffect1 = this->StatusEffectContainer->GetStatusEffectByTier(EFFECT_MINNE, 1))
+            {
+                bonus += PMinneffect1->GetPower();
+            }
+            if (CStatusEffect* PMinneffect2 = this->StatusEffectContainer->GetStatusEffectByTier(EFFECT_MINNE, 2))
+            {
+                bonus += PMinneffect2->GetPower();
+            }  
+            if (CStatusEffect* PMinneffect3 = this->StatusEffectContainer->GetStatusEffectByTier(EFFECT_MINNE, 3))
+            {
+                bonus += PMinneffect3->GetPower();
+            }
+            if (CStatusEffect* PMinneffect4 = this->StatusEffectContainer->GetStatusEffectByTier(EFFECT_MINNE, 4))
+            {
+                bonus += PMinneffect4->GetPower();
+            }
+        }
+
+	    return 1 + bonus + VIT() / 2;
     }
 
+    int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
     return DEF + (DEF * m_modStat[Mod::DEFP] / 100) +
         std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]);
 }

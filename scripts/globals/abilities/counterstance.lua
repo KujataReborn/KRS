@@ -2,10 +2,9 @@
 -- Ability: Counterstance
 -- Increases chance to counter but lowers defense.
 -- Obtained: Monk Level 45
--- Recast Time: 5:00
--- Duration: 5:00
+-- Recast Time: 00:05:00
+-- Duration: 00:05:00
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -16,6 +15,6 @@ end
 function onUseAbility(player,target,ability)
     local power = 45 + player:getMod(tpz.mod.COUNTERSTANCE_EFFECT)
 
-    target:delStatusEffect(tpz.effect.COUNTERSTANCE) --if not found this will do nothing
-    target:addStatusEffect(tpz.effect.COUNTERSTANCE,power,0,300)
+    target:delStatusEffect(tpz.effect.COUNTERSTANCE)
+    target:addStatusEffect(tpz.effect.COUNTERSTANCE, power, 0, 300)
 end
