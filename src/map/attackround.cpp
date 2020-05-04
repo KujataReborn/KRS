@@ -47,23 +47,38 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
     // Grab a trick attack assistant.
     m_taEntity = battleutils::getAvailableTrickAttackChar(attacker, attacker->GetBattleTarget());
 
-    // Build main weapon attacks.
-    CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), RIGHTATTACK);
-
-    // Build dual wield off hand weapon attacks.
-    if (IsH2H())
+    if (m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
     {
-        // Build left hand H2H attacks.
-        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), LEFTATTACK);
+        // Build main kick attack.
+        AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, RIGHTATTACK, 1);
 
-        // Build kick attacks.
-        CreateKickAttacks();
+        m_kickAttackOccured = true;
+
+        if (IsH2H())
+        {
+            // Build extra kick attack.
+            CreateKickAttacks();
+        }
     }
-
-    else if ((m_subWeaponType > 0 && m_subWeaponType < 4) ||
-        (attacker->objtype == TYPE_MOB && static_cast<CMobEntity*>(attacker)->getMobMod(MOBMOD_DUAL_WIELD)))
+    else
     {
-        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_SUB]), LEFTATTACK);
+        // Build main weapon attacks.
+        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), RIGHTATTACK);
+
+        // Build dual wield off hand weapon attacks.
+        if (IsH2H())
+        {
+            // Build left hand H2H attacks.
+            CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), LEFTATTACK);
+
+            // Build extra kick attacks.
+            CreateKickAttacks();
+        }
+        else if ((m_subWeaponType > 0 && m_subWeaponType < 4) ||
+            (attacker->objtype == TYPE_MOB && static_cast<CMobEntity*>(attacker)->getMobMod(MOBMOD_DUAL_WIELD)))
+        {
+            CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_SUB]), LEFTATTACK);
+        }
     }
 
     // Build Daken throw
@@ -347,26 +362,44 @@ void CAttackRound::CreateKickAttacks()
 {
     if (m_attacker->objtype == TYPE_PC)
     {
-        // kick attack mod (All jobs)
-        uint16 kickAttack = m_attacker->getMod(Mod::KICK_ATTACK_RATE);
+        // Kick Attack (all jobs)
+        uint16 kickAttackRate = m_attacker->getMod(Mod::KICK_ATTACK_RATE);
 
-        if (m_attacker->GetMJob() == JOB_MNK) // MNK (Main job)
+        if (m_attacker->GetMJob() == JOB_MNK) // Kick Attack Rate merit
         {
-            kickAttack += ((CCharEntity*)m_attacker)->PMeritPoints->GetMeritValue(MERIT_KICK_ATTACK_RATE, (CCharEntity*)m_attacker);
+            kickAttackRate += ((CCharEntity*)m_attacker)->PMeritPoints->GetMeritValue(MERIT_KICK_ATTACK_RATE, (CCharEntity*)m_attacker);
         }
 
-        kickAttack = std::clamp<uint16>(kickAttack, 0, 100);
+        kickAttackRate = std::clamp<uint16>(kickAttackRate, 0, 100);
+        
+        // Double Attack
+        uint16 doubleAttackRate = 0;
 
-        if (tpzrand::GetRandomNumber(100) < kickAttack)
+        if (m_kickAttackOccured) // Previous kick caused by Footwork
         {
-            AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, RIGHTATTACK, 1);
+            doubleAttackRate = m_attacker->getMod(Mod::DOUBLE_ATTACK);
+        }
+        
+        doubleAttackRate = std::clamp<uint16>(doubleAttackRate, 0, 100);
+
+        // Roll for kick attack
+        if (tpzrand::GetRandomNumber(100) < kickAttackRate || tpzrand::GetRandomNumber(100) < doubleAttackRate)
+        {
+            PHYSICAL_ATTACK_DIRECTION direction = m_kickAttackOccured ? LEFTATTACK : RIGHTATTACK;
+
+            AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, direction, 1);
+            
             m_kickAttackOccured = true;
-        }
 
-        // Tantra set mod: Try an extra left kick attack.
-        if (m_kickAttackOccured && tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::EXTRA_KICK_ATTACK))
-        {
-            AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, LEFTATTACK, 1);
+            // Extra kick
+            uint16 extraKickRate = m_attacker->getMod(Mod::EXTRA_KICK_ATTACK);
+
+            if (!m_kickAttackOccured && tpzrand::GetRandomNumber(100) < extraKickRate)
+            {
+                direction = m_kickAttackOccured ? RIGHTATTACK : LEFTATTACK;
+
+                AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, direction, 1);
+            }
         }
     }
 }

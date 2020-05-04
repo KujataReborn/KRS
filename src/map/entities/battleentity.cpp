@@ -259,10 +259,13 @@ int16 CBattleEntity::GetWeaponDelay(bool tp)
     {
         uint16 MinimumDelay = weapon->getDelay(); // Track base delay.  We will need this later.  Mod::DELAY is ignored for now.
         WeaponDelay = weapon->getDelay() - getMod(Mod::DELAY);
-        if (weapon->isHandToHand())
+
+        // Hand-to-Hand
+        if (weapon->isHandToHand() && !StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
         {
             WeaponDelay -= getMod(Mod::MARTIAL_ARTS) * 1000 / 60;
         }
+        // Dual Wield
         else if (auto subweapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_SUB]); subweapon && subweapon->getDmgType() > 0 &&
             subweapon->getDmgType() < 4)
         {
