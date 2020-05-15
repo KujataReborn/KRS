@@ -103,7 +103,7 @@ void CAttack::SetCritical(bool value)
         float attBonus = 0.f;
         if (m_attackType == PHYSICAL_ATTACK_TYPE::KICK)
         {
-            CItemWeapon* weapon = m_attacker->m_Weapons[SLOT_MAIN];
+            auto weapon = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[SLOT_MAIN]);
             CStatusEffect* footworkEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_FOOTWORK);
             if ((weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND) && footworkEffect)
             {
