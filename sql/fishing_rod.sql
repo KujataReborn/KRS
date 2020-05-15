@@ -177,6 +177,7 @@ INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',624,1);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',887,5);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',2216,1);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',2341,1);
+INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',4291,5);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',4310,1);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',4313,1);
 INSERT INTO `fishing_rod` VALUES (17014,'Hume Fishing Rod',4315,1);

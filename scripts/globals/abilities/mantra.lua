@@ -2,8 +2,8 @@
 -- Ability: Mantra
 -- Increases the max. HP of party members within area of effect.
 -- Obtainable: Monk Level 75
--- Recast Time: 0:10:00
--- Duration: 0:03:00
+-- Recast Time: 00:10:00
+-- Duration: 00:03:00
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
@@ -17,7 +17,7 @@ function onUseAbility(player,target,ability)
 
     local merits = player:getMerit(tpz.merit.MANTRA)
 
-    target:addStatusEffect(tpz.effect.MAX_HP_BOOST,merits,0,180)
+    target:addStatusEffect(tpz.effect.MAX_HP_BOOST, merits, 0, 180)
 
     return tpz.effect.MANTRA
 end

@@ -106,7 +106,7 @@ void Initialize()
                 PItem->setDailyIncrease(Sql_GetIntData(SqlHandle,4));
 				PItem->setInitialQuantity(Sql_GetIntData(SqlHandle,5));
 
-				PItem->setQuantity(PItem->IsDailyIncrease() ? PItem->getInitialQuantity() : 0);
+				PItem->setQuantity(PItem->getInitialQuantity());
 				PItem->setBasePrice((uint32)(PItem->getMinPrice() + ((float)(PItem->getStackSize() - PItem->getQuantity()) / PItem->getStackSize()) * (PItem->getMaxPrice() - PItem->getMinPrice())));
 
                 PGuildShop->InsertItem(PItem);

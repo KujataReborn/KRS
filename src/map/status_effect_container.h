@@ -51,7 +51,7 @@ public:
     void DelStatusEffectsByFlag(uint32 flag, bool silent = false);                   // удаляем все эффекты с указанным типом
     void DelStatusEffectsByIcon(uint16 IconID);                 // удаляем все эффекты с указанной иконкой
     void DelStatusEffectsByType(uint16 Type);
-    bool DelStatusEffectByTier(EFFECT StatusID, uint16 power);
+    bool DelStatusEffectByTier(EFFECT StatusID, uint16 tier);
     void KillAllStatusEffect();
 
     bool HasStatusEffect(EFFECT StatusID);                      // проверяем наличие эффекта
@@ -68,6 +68,7 @@ public:
 
     CStatusEffect* GetStatusEffect(EFFECT StatusID);
     CStatusEffect* GetStatusEffect(EFFECT StatusID, uint32 SubID);
+    CStatusEffect* GetStatusEffectByTier(EFFECT StatusID, uint16 tier);
 
     void UpdateStatusIcons();                                   // пересчитываем иконки эффектов
     void CheckEffectsExpiry(time_point tick);
