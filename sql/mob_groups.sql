@@ -7087,7 +7087,7 @@ INSERT INTO `mob_groups` VALUES (2,3742,104,'Spring_Pugil',0,128,147,0,0,16,18,0
 INSERT INTO `mob_groups` VALUES (3,5133,104,'Thread_Leech',0,128,895,0,0,19,22,0);
 INSERT INTO `mob_groups` VALUES (4,1323,104,'Ferocious_Pugil',0,128,147,0,0,24,25,0);
 INSERT INTO `mob_groups` VALUES (5,2001,104,'Huge_Leech',0,128,895,0,0,27,29,0);
-INSERT INTO `mob_groups` VALUES (6,2271,104,'Knight_Crab',300,0,93,0,0,35,35,0);
+INSERT INTO `mob_groups` VALUES (6,2271,104,'Knight_Crab',0,128,93,0,0,35,35,0);
 INSERT INTO `mob_groups` VALUES (7,2254,104,'King_Arthro',0,128,1449,35000,7500,55,55,0);
 INSERT INTO `mob_groups` VALUES (8,3752,104,'Stag_Beetle',330,0,2321,0,0,20,23,0);
 INSERT INTO `mob_groups` VALUES (9,4285,104,'Wandering_Sapling',330,0,2619,0,0,13,16,0);
@@ -11913,7 +11913,7 @@ INSERT INTO `mob_groups` VALUES (49,2817,193,'Necroplasm',0,128,0,0,0,30,30,0);
 INSERT INTO `mob_groups` VALUES (50,5534,193,'Air_Elemental',0,128,0,0,0,75,75,0);
 INSERT INTO `mob_groups` VALUES (51,2633,193,'Metallic_Slime',0,128,0,0,0,34,38,0);
 INSERT INTO `mob_groups` VALUES (52,5168,193,'Krabimanjaro',0,128,0,0,9999,95,96,0);
-INSERT INTO `mob_groups` VALUES (9612,252,193,'Aroma_Leech',0,128,172,0,0,44,48,0);
+INSERT INTO `mob_groups` VALUES (53,252,193,'Aroma_Leech',0,128,172,0,0,44,48,0);
 INSERT INTO `mob_groups` VALUES (9651,3992,193,'Treasure_Chest',0,0,0,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (9655,4498,193,'Zeid',0,0,0,0,0,0,0,0);
 
@@ -12202,7 +12202,7 @@ INSERT INTO `mob_groups` VALUES (40,4386,198,'Wyrmfly',0,128,0,0,0,20,20,0);
 INSERT INTO `mob_groups` VALUES (41,5533,198,'Dark_Elemental',0,128,0,0,0,75,75,0);
 INSERT INTO `mob_groups` VALUES (42,4675,198,'Lost_Soul',0,128,0,3500,0,50,50,0);
 INSERT INTO `mob_groups` VALUES (43,5161,198,'Ogbunabali',0,128,0,0,0,94,95,0);
-INSERT INTO `mob_groups` VALUES (9843,250,198,'Aroma_Crawler',0,128,172,0,0,44,48,0);
+INSERT INTO `mob_groups` VALUES (44,250,198,'Aroma_Crawler',0,128,172,0,0,44,48,0);
 INSERT INTO `mob_groups` VALUES (9847,913,198,'Dark_Elemental',0,128,0,0,0,33,36,0);
 INSERT INTO `mob_groups` VALUES (9850,1518,198,'Ghoul',0,0,960,0,0,0,0,0);
 INSERT INTO `mob_groups` VALUES (9860,1720,198,'Goblins_Bat',0,128,0,0,0,24,26,0);
