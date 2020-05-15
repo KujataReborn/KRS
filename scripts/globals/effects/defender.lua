@@ -7,16 +7,18 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onEffectGain(target,effect)
-    target:addMod(tpz.mod.DEFP,25)
-    target:addMod(tpz.mod.RATTP,-25)
-    target:addMod(tpz.mod.ATTP,-25)
+    local power = effect:getPower()
+    target:addMod(tpz.mod.DEFP, power)
+    target:addMod(tpz.mod.RATTP, -power)
+    target:addMod(tpz.mod.ATTP, -power)
 end
 
 function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
-    target:delMod(tpz.mod.DEFP,25)
-    target:delMod(tpz.mod.ATTP,-25)
-    target:delMod(tpz.mod.RATTP,-25)
+    local power = effect:getPower()
+    target:delMod(tpz.mod.DEFP, power)
+    target:delMod(tpz.mod.ATTP, -power)
+    target:delMod(tpz.mod.RATTP, -power)
 end

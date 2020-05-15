@@ -2,10 +2,9 @@
 -- Ability: Defender
 -- Enhances defense but weakens attacks.
 -- Obtained: Warrior Level 25
--- Recast Time: 3:00
--- Duration: 3:00
+-- Recast Time: 00:03:00
+-- Duration: 00:03:00
 -----------------------------------
-require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
@@ -14,5 +13,7 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(tpz.effect.DEFENDER,1,0,180 + player:getMod(tpz.mod.DEFENDER_DURATION))
+    local power = 25
+    local duration = 180 + player:getMod(tpz.mod.DEFENDER_DURATION)
+    player:addStatusEffect(tpz.effect.DEFENDER, power, 0, duration)
 end

@@ -38,7 +38,7 @@ CREATE TABLE `abilities` (
 --
 -- ORDER BY:  `abilityId`
 
-INSERT INTO `abilities` VALUES (0,'mighty_strikes',1,0,1,3600,0,0,0,33,2000,0,6,20.0,0,1,300,0,0,NULL);
+INSERT INTO `abilities` VALUES (0,'mighty_strikes',1,0,1,7200,0,0,0,33,2000,0,6,20.0,0,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (1,'hundred_fists',2,0,1,7200,0,0,0,34,2000,0,6,20.0,0,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (2,'benediction',3,0,1,3600,0,102,0,35,2000,0,6,20.0,1,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (3,'manafont',4,0,1,3600,0,0,0,36,2000,0,6,20.0,0,1,0,0,0,NULL);
@@ -169,7 +169,7 @@ INSERT INTO `abilities` VALUES (129,'thunder_maneuver',18,1,1,10,210,0,0,333,200
 INSERT INTO `abilities` VALUES (130,'water_maneuver',18,1,1,10,210,0,0,333,2000,0,6,18.0,0,1,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (131,'light_maneuver',18,1,1,10,210,0,0,333,2000,0,6,18.0,0,1,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (132,'dark_maneuver',18,1,1,10,210,0,0,333,2000,0,6,18.0,0,1,0,0,512,'TOAU');
-INSERT INTO `abilities` VALUES (133,'warriors_charge',1,75,1,300,6,0,0,154,2000,0,6,20.0,0,1,300,2048,1,'TOAU');
+INSERT INTO `abilities` VALUES (133,'warriors_charge',1,75,1,900,6,0,0,154,2000,0,6,20.0,0,1,300,2048,1,'TOAU');
 INSERT INTO `abilities` VALUES (134,'tomahawk',1,75,4,180,7,0,0,244,2000,0,3,20.0,0,1,600,2050,1,'TOAU');
 INSERT INTO `abilities` VALUES (135,'mantra',2,75,1,600,19,441,0,155,2000,0,6,20.0,1,1,60,2112,1,'TOAU');
 INSERT INTO `abilities` VALUES (136,'formless_strikes',2,75,1,600,20,0,0,156,2000,0,6,20.0,0,1,300,2114,1,'TOAU');

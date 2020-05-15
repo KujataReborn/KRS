@@ -1,7 +1,7 @@
 -----------------------------------
+--
 -- tpz.effect.RETALIATION
--- Allows you to counterattack but reduces movement speed.
--- Unlike counter, grants TP like a regular melee attack.
+--
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
