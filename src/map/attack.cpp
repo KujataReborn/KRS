@@ -103,7 +103,9 @@ void CAttack::SetCritical(bool value)
         float attBonus = 0.f;
         if (m_attackType == PHYSICAL_ATTACK_TYPE::KICK)
         {
-            if (CStatusEffect* footworkEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_FOOTWORK))
+            CItemWeapon* weapon = m_attacker->m_Weapons[SLOT_MAIN];
+            CStatusEffect* footworkEffect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_FOOTWORK);
+            if ((weapon && weapon->getSkillType() == SKILL_HAND_TO_HAND) && footworkEffect)
             {
                 attBonus = footworkEffect->GetSubPower() / 256.f; // Mod is out of 256
             }
@@ -246,17 +248,16 @@ uint16 CAttack::GetAnimationID()
 {
     AttackAnimation animation;
 
-    // Try normal kick attacks (without footwork)
+    // Kick attack
     if (this->m_attackType == PHYSICAL_ATTACK_TYPE::KICK)
     {
         animation = this->m_attackDirection == RIGHTATTACK ? AttackAnimation::RIGHTKICK : AttackAnimation::LEFTKICK;
     }
-
+    // Daken attack
     else if (this->m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
     {
         animation = AttackAnimation::THROW;
     }
-
     // Normal attack
     else
     {

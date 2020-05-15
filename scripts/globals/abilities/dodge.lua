@@ -2,8 +2,8 @@
 -- Ability: Dodge
 -- Enhances user's evasion.
 -- Obtained: Monk Level 15
--- Recast Time: 5:00
--- Duration: 2:00
+-- Recast Time: 00:05:00
+-- Duration: 00:02:00
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
@@ -14,5 +14,6 @@ end
 
 function onUseAbility(player,target,ability)
     local power = 20 + player:getMod(tpz.mod.DODGE_EFFECT)
-    player:addStatusEffect(tpz.effect.DODGE,power,0,120)
+
+    player:addStatusEffect(tpz.effect.DODGE, power, 0, 120)
 end

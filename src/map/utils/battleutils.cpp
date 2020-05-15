@@ -1983,6 +1983,10 @@ namespace battleutils
                 baseTp = CalculateBaseTP((delay * 120) / 1000);
 
             }
+            else if (weapon->getSkillType() == SKILL_HAND_TO_HAND && PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_FOOTWORK))
+            {
+                baseTp = 136;
+            }
             else
             {
                 int16 delay = PAttacker->GetWeaponDelay(true);
