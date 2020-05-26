@@ -605,8 +605,6 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
 
     magicacc = magicacc + caster:getMerit(tpz.merit.MAGIC_ACCURACY)
 
-    magicacc = magicacc + caster:getMerit(tpz.merit.NIN_MAGIC_ACCURACY)
-
     -- Base magic evasion (base magic evasion plus resistances(players), plus elemental defense(mobs)
     local magiceva = target:getMod(tpz.mod.MEVA) + resMod
 
@@ -908,10 +906,6 @@ function calculateMagicBurst(caster, spell, target, params)
     -- Obtain first multiplier from gear, atma and job traits
     modburst = modburst + (caster:getMod(tpz.mod.MAG_BURST_BONUS) / 100) + params.AMIIburstBonus
 
-    if caster:isBehind(target) and caster:hasStatusEffect(tpz.effect.INNIN) then
-        modburst = modburst + (caster:getMerit(tpz.merit.INNIN_EFFECT)/100)
-    end
-
     -- Cap bonuses from first multiplier at 40% or 1.4
     if (modburst > 1.4) then
         modburst = 1.4
@@ -1026,10 +1020,6 @@ function addBonuses(caster, spell, target, dmg, params)
         end
     else
         local mab = caster:getMod(tpz.mod.MATT) + params.bonusmab
-
-        if spell:getSkillType() == tpz.skill.NINJUTSU then
-            mab = mab + caster:getMerit(tpz.merit.NIN_MAGIC_BONUS)
-        end
 
         local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
         if ( math.random(1,100) < mab_crit ) then
