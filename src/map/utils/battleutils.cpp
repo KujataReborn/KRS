@@ -2289,8 +2289,10 @@ namespace battleutils
                 }
             }
 
-            if (PDefender->objtype == TYPE_PC) crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender);
-            //ShowDebug("Crit rate mod before Innin/Yonin: %d\n", crithitrate);
+            if (PDefender->objtype == TYPE_PC)
+            {
+                crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender);
+            }
             // Check for Innin crit rate bonus from behind target
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && ((abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23)))
             {
@@ -2301,7 +2303,6 @@ namespace battleutils
             {
                 crithitrate -= PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_YONIN)->GetPower();
             }
-            //ShowDebug("Crit rate mod after Innin/Yonin: %d\n", crithitrate);
 
             int32 attackerdex = PAttacker->DEX();
             int32 defenderagi = PDefender->AGI();
