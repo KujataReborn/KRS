@@ -9,7 +9,9 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onAbilityCheck(player,target,ability)
-    if player:hasStatusEffect(tpz.effect.SEIGAN) then
+    if player:hasStatusEffect(tpz.effect.COPY_IMAGE) then
+        return tpz.msg.basic.JA_NO_EFFECT,0
+    elseif player:hasStatusEffect(tpz.effect.SEIGAN) then
         ability:setRecast(ability:getRecast() / 2) -- Seigan halves recast time
     end
 
