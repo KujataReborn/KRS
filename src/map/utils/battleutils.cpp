@@ -1986,33 +1986,60 @@ namespace battleutils
 
             if (giveTPtoAttacker)
             {
-                if (PAttacker->objtype == TYPE_PC && physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
+                float storeTp = (float)PAttacker->getMod(Mod::STORETP);
+
+                if (PAttacker->objtype == TYPE_PC)
                 {
-                    baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
+                    storeTp += (float)((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, (CCharEntity*)PAttacker);
+
+                    if (physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
+                    {
+                        baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
+                    }
                 }
 
-                PAttacker->addTP((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                storeTp = 1.0f + (storeTp / 100.0f)
+
+                PAttacker->addTP((int16)(tpMultiplier * (baseTp * storeTp)));
             }
 
             if (giveTPtoVictim)
             {
-                //account for attacker's subtle blow which reduces the baseTP gain for the defender
-                float sBlowMult = ((100.0f - std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), 0.0f, 50.0f)) / 100.0f);
+                float sBlow = (float)PAttacker->getMod(Mod::SUBTLE_BLOW);
 
-                //mobs hit get basetp+30 whereas pcs hit get basetp/3
+                if (PAttacker->objtype == TYPE_PC)
+                {
+                    sBlow += (float)((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, (CCharEntity*)PAttacker);
+                }
+
+                sBlow = 1.0f - std::clamp(sBlow / 100.0f, 0.0f, 0.5f);
+
+                float storeTp = (float)PDefender->getMod(Mod::STORETP);
+
                 if (PDefender->objtype == TYPE_PC)
                 {
-                    PDefender->addTP((int16)(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))))); //yup store tp counts on hits taken too!
+                    baseTp /= 3;
+                    storeTp += (float)((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, (CCharEntity*)PDefender);
                 }
                 else
-                    PDefender->addTP((uint16)(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); //subtle blow also reduces the "+30" on mob tp gain
+                {
+                    baseTp += 30;
+                }
+
+                storeTp = 1.0f + (storeTp / 100.0f);
+
+                PDefender->addTP((uint16)(tpMultiplier * (baseTp * sBlow * storeTp)));
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
+        {
             ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
+        }
 
         if (PAttacker->objtype == TYPE_PC && !isRanged)
+        {
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
+        }
 
         return damage;
     }
