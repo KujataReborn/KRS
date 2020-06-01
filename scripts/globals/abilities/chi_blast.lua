@@ -13,6 +13,14 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
+    local merit = player:getMerit(tpz.merit.PENANCE)
+
+    if merit >= 1 then
+        local duration = 20 * merit --  00:00:20 for each merit upgrade
+
+        target:addStatusEffect(tpz.effect.INHIBIT_TP, 25, 0, duration)
+    end
+
     local MND = player:getStat(tpz.mod.MND)
     local rnd = 0.5 + (math.random() / 2) -- Between 0.5 and 1.0
     local boostCount = 0
