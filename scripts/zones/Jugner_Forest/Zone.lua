@@ -19,7 +19,7 @@ function onInitialize(zone)
     zone:registerRegion(1, -484, 10, 292, 0, 0, 0) -- Sets Mark for "Under Oath" Quest cutscene.
 
     UpdateNMSpawnPoint(ID.mob.FRAELISSA)
-    GetMobByID(ID.mob.FRAELISSA):setRespawnTime(math.random(900, 10800))
+    GetMobByID(ID.mob.FRAELISSA):setRespawnTime(math.random(3600, 4500)) -- 60 to 75 minutes
 
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
 
