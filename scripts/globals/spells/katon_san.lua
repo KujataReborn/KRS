@@ -11,25 +11,23 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
-    --doNinjutsuNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus)
-    local duration = 15 + caster:getMerit(tpz.merit.KATON_EFFECT) -- T1 bonus debuff duration
+    local duration = 15 + caster:getMerit(tpz.merit.KATON_EFFECT) -- Bonus debuff duration
     local bonusAcc = 0
-    local bonusMab = caster:getMerit(tpz.merit.KATON_EFFECT) -- T1 mag atk
+    local bonusMab = caster:getMerit(tpz.merit.KATON_EFFECT) -- Bonus magic damage
+
+    if caster:getMerit(tpz.merit.KATON_SAN) > 1 then
+        bonusAcc = bonusAcc + caster:getMerit(tpz.merit.KATON_SAN)
+        bonusMab = bonusMab + caster:getMerit(tpz.merit.KATON_SAN)
+    end
 
     local params = {}
-
-    params.dmg = 134
-
-    params.multiplier = 1.5
-
-    params.hasMultipleTargetReduction = false
-
-    params.resistBonus = bonusAcc
-
-    params.mabBonus = bonusMab
-
+        params.dmg = 134
+        params.multiplier = 1.5
+        params.hasMultipleTargetReduction = false
+        params.resistBonus = bonusAcc
+        params.mabBonus = bonusMab
     dmg = doNinjutsuNuke(caster, target, spell, params)
-    handleNinjutsuDebuff(caster,target,spell,30,duration,tpz.mod.WATERRES)
+    handleNinjutsuDebuff(caster, target, spell, 30, duration, tpz.mod.WATERRES)
 
     return dmg
 end
