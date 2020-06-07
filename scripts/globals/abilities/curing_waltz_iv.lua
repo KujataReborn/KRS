@@ -54,8 +54,6 @@ function onUseAbility(player,target,ability)
     --Performing mj check.
     if mjob == tpz.job.DNC then
         cure = (vit+chr)+450
-    else
-        cure = (vit+chr)*0.5+450
     end
 
     -- apply waltz modifiers
