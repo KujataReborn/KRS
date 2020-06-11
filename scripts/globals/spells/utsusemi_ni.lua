@@ -16,12 +16,12 @@ function onSpellCast(caster,target,spell)
     local numShadows = 3
     local icon = tpz.effect.COPY_IMAGE_3
 
-    if (caster:getMainJob() == tpz.job.NIN) then
+    if caster:getMainJob() == tpz.job.NIN then
         numShadows = 4 + target:getMod(tpz.mod.UTSUSEMI_BONUS)
         icon = tpz.effect.COPY_IMAGE_4
     end
 
-    if (effect == nil or effect:getPower() <= 2) then
+    if effect == nil or effect:getPower() <= 2 then
         target:addStatusEffectEx(tpz.effect.COPY_IMAGE, icon, 2, 0, 900, 0, numShadows)
         spell:setMsg(tpz.msg.basic.MAGIC_GAIN_EFFECT)
     else

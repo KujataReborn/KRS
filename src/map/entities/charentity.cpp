@@ -1225,46 +1225,53 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
     actionTarget.reaction = REACTION_HIT;		//0x10
-    actionTarget.speceffect = SPECEFFECT_HIT;		//0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
+    actionTarget.speceffect = SPECEFFECT_HIT;	//0x60 (SPECEFFECT_HIT + SPECEFFECT_RECOIL)
     actionTarget.messageID = 352;
 
     CItemWeapon* PItem = (CItemWeapon*)this->getEquip(SLOT_RANGED);
     CItemWeapon* PAmmo = (CItemWeapon*)this->getEquip(SLOT_AMMO);
 
-    bool ammoThrowing = PAmmo ? PAmmo->isThrowing() : false;
-    bool rangedThrowing = PItem ? PItem->isThrowing() : false;
     uint8 slot = SLOT_RANGED;
+    uint8 shadowsTaken = 0;
+    uint8 hitCount = 1;			// 1 hit by default
+    uint8 realHits = 0;			// storing the real number of hit for tp multipler
+    auto ammoConsumed = 0;
+    bool hitOccured = false;    // track if player hit mob at all
 
-    if (ammoThrowing)
+    bool isBarrage = false;
+    bool isSange = false;
+
+    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0))
+    {
+        isBarrage = true;
+        hitCount += battleutils::getBarrageShotCount(this);
+
+        this->StatusEffectContainer->DelStatusEffect(EFFECT_BARRAGE);
+    }
+    else if (PAmmo->isThrowing())
     {
         slot = SLOT_AMMO;
         PItem = nullptr;
+
+        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
+        {
+            isSange = true;
+            hitCount += getMod(Mod::UTSUSEMI);
+
+            this->StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
+
+            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COPY_IMAGE))
+            {
+                this->StatusEffectContainer->DelStatusEffect(EFFECT_COPY_IMAGE);
+            }
+        }
     }
-    if (rangedThrowing)
+    else if (PItem->isThrowing())
     {
         PAmmo = nullptr;
     }
 
-    uint8 shadowsTaken = 0;
-    uint8 hitCount = 1;			// 1 hit by default
-    uint8 realHits = 0;			// to store the real number of hit for tp multipler
-    auto ammoConsumed = 0;
-    bool hitOccured = false;	// track if player hit mob at all
-    bool isSange = false;
-    bool isBarrage = StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0);
-
-    // if barrage is detected, getBarrageShotCount also checks for ammo count
-    if (!ammoThrowing && !rangedThrowing && isBarrage)
-    {
-        hitCount += battleutils::getBarrageShotCount(this);
-    }
-    else if (ammoThrowing && this->StatusEffectContainer->HasStatusEffect(EFFECT_SANGE))
-    {
-        isSange = true;
-        hitCount += getMod(Mod::UTSUSEMI);
-    }
-
-    // loop for barrage hits, if a miss occurs, the loop will end
+    // loop for sange/barrage hits, if a miss occurs, the loop will end
     for (uint8 i = 1; i <= hitCount; ++i)
     {
         if (PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_PERFECT_DODGE, 0))
@@ -1361,10 +1368,10 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     }
 
     // if a hit did occur (even without barrage)
-    if (hitOccured == true)
+    if (hitOccured)
     {
         // any misses with barrage cause remaing shots to miss, meaning we must check Action.reaction
-        if (actionTarget.reaction == REACTION_EVADE && (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE) || isSange))
+        if (actionTarget.reaction == REACTION_EVADE && (isBarrage || isSange))
         {
             actionTarget.messageID = 352;
             actionTarget.reaction = REACTION_HIT;
@@ -1375,7 +1382,9 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         // lower damage based on shadows taken
         if (shadowsTaken)
+        {
             actionTarget.param = (int32)(actionTarget.param * (1 - ((float)shadowsTaken / realHits)));
+        }
 
         // absorb message
         if (actionTarget.param < 0)
@@ -1391,7 +1400,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         //TODO: move all hard coded additional effect ammo to scripts
         if ((PAmmo != nullptr && battleutils::GetScaledItemModifier(this, PAmmo, Mod::ADDITIONAL_EFFECT) > 0) ||
             (PItem != nullptr && battleutils::GetScaledItemModifier(this, PItem, Mod::ADDITIONAL_EFFECT) > 0)) {}
-        luautils::OnAdditionalEffect(this, PTarget, (PAmmo != nullptr ? PAmmo : PItem), &actionTarget, totalDamage);
+
+        if (!isSange)
+        {
+            luautils::OnAdditionalEffect(this, PTarget, (PAmmo != nullptr ? PAmmo : PItem), &actionTarget, totalDamage);
+        }
     }
     else if (shadowsTaken > 0)
     {
@@ -1402,23 +1415,13 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     }
 
     if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)
-        actionTarget.speceffect = SPECEFFECT_RECOIL;
-
-    // remove barrage effect if present
-    if (this->StatusEffectContainer->HasStatusEffect(EFFECT_BARRAGE, 0)) {
-        StatusEffectContainer->DelStatusEffect(EFFECT_BARRAGE, 0);
-    }
-    else if (isSange)
     {
-        uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
-
-        // remove shadows
-        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
-
-        StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
+        actionTarget.speceffect = SPECEFFECT_RECOIL;
     }
+
     battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
+
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
 

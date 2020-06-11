@@ -13,20 +13,16 @@ function onMagicCastingCheck(caster, target, spell)
 end
 
 function onSpellCast(caster, target, spell)
-    local dINT = caster:getStat(tpz.mod.INT) - target:getStat(tpz.mod.INT)
-    --Power for Hojo is a flat 19.5% reduction
-    local power = 2000
-    --Duration and Resistance calculation
-    local duration = 300
     local params = {}
-    params.attribute = tpz.mod.INT
-    params.skillType = tpz.skill.NINJUTSU
-    params.bonus = 0
-    duration = duration * applyResistance(caster, target, spell, params)
-    --Calculates the resist chance from Resist Blind trait
-    if math.random(0,100) >= target:getMod(tpz.mod.SLOWRES) then
-        -- Spell succeeds if a 1 or 1/2 resist check is achieved
-        if duration >= 150 then
+        params.attribute = tpz.mod.INT
+        params.skillType = tpz.skill.NINJUTSU
+        params.bonus = 0
+        params.effect = tpz.effect.SLOW
+    local duration = 300 * applyResistance(caster, target, spell, params)
+    local power = 2000 -- Power is a flat 19.5% reduction
+
+    if math.random(100) >= target:getMod(tpz.mod.SLOWRES) then
+        if duration >= 150 then -- Spell succeeds if a 1 or 1/2 resist check is achieved
             if target:addStatusEffect(tpz.effect.SLOW, power, 0, duration) then
                 spell:setMsg(tpz.msg.basic.MAGIC_ENFEEB_IS)
             else

@@ -1986,33 +1986,60 @@ namespace battleutils
 
             if (giveTPtoAttacker)
             {
-                if (PAttacker->objtype == TYPE_PC && physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
+                float storeTp = (float)PAttacker->getMod(Mod::STORETP);
+
+                if (PAttacker->objtype == TYPE_PC)
                 {
-                    baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
+                    storeTp += (float)((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, (CCharEntity*)PAttacker);
+
+                    if (physicalAttackType == PHYSICAL_ATTACK_TYPE::ZANSHIN)
+                    {
+                        baseTp += ((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_IKISHOTEN, (CCharEntity*)PAttacker);
+                    }
                 }
 
-                PAttacker->addTP((int16)(tpMultiplier * (baseTp * (1.0f + 0.01f * (float)((PAttacker->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker)))))));
+                storeTp = 1.0f + (storeTp / 100.0f)
+
+                PAttacker->addTP((int16)(tpMultiplier * (baseTp * storeTp)));
             }
 
             if (giveTPtoVictim)
             {
-                //account for attacker's subtle blow which reduces the baseTP gain for the defender
-                float sBlowMult = ((100.0f - std::clamp((float)PAttacker->getMod(Mod::SUBTLE_BLOW), 0.0f, 50.0f)) / 100.0f);
+                float sBlow = (float)PAttacker->getMod(Mod::SUBTLE_BLOW);
 
-                //mobs hit get basetp+30 whereas pcs hit get basetp/3
+                if (PAttacker->objtype == TYPE_PC)
+                {
+                    sBlow += (float)((CCharEntity*)PAttacker)->PMeritPoints->GetMeritValue(MERIT_SUBTLE_BLOW_EFFECT, (CCharEntity*)PAttacker);
+                }
+
+                sBlow = 1.0f - std::clamp(sBlow / 100.0f, 0.0f, 0.5f);
+
+                float storeTp = (float)PDefender->getMod(Mod::STORETP);
+
                 if (PDefender->objtype == TYPE_PC)
                 {
-                    PDefender->addTP((int16)(tpMultiplier * ((baseTp / 3) * sBlowMult * (1.0f + 0.01f * (float)((PDefender->getMod(Mod::STORETP) + getStoreTPbonusFromMerit(PAttacker))))))); //yup store tp counts on hits taken too!
+                    baseTp /= 3;
+                    storeTp += (float)((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_STORE_TP_EFFECT, (CCharEntity*)PDefender);
                 }
                 else
-                    PDefender->addTP((uint16)(tpMultiplier * ((baseTp + 30) * sBlowMult * (1.0f + 0.01f * (float)PDefender->getMod(Mod::STORETP))))); //subtle blow also reduces the "+30" on mob tp gain
+                {
+                    baseTp += 30;
+                }
+
+                storeTp = 1.0f + (storeTp / 100.0f);
+
+                PDefender->addTP((uint16)(tpMultiplier * (baseTp * sBlow * storeTp)));
             }
         }
         else if (PDefender->objtype == TYPE_MOB)
+        {
             ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
+        }
 
         if (PAttacker->objtype == TYPE_PC && !isRanged)
+        {
             PAttacker->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ATTACK);
+        }
 
         return damage;
     }
@@ -2289,8 +2316,10 @@ namespace battleutils
                 }
             }
 
-            if (PDefender->objtype == TYPE_PC) crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender);
-            //ShowDebug("Crit rate mod before Innin/Yonin: %d\n", crithitrate);
+            if (PDefender->objtype == TYPE_PC)
+            {
+                crithitrate -= ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_ENEMY_CRIT_RATE, (CCharEntity*)PDefender);
+            }
             // Check for Innin crit rate bonus from behind target
             if (PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN) && ((abs(PDefender->loc.p.rotation - PAttacker->loc.p.rotation) < 23)))
             {
@@ -2301,7 +2330,6 @@ namespace battleutils
             {
                 crithitrate -= PDefender->StatusEffectContainer->GetStatusEffect(EFFECT_YONIN)->GetPower();
             }
-            //ShowDebug("Crit rate mod after Innin/Yonin: %d\n", crithitrate);
 
             int32 attackerdex = PAttacker->DEX();
             int32 defenderagi = PDefender->AGI();
@@ -3076,14 +3104,6 @@ namespace battleutils
             * (100 + PAttacker->getMod(Mod::SKILLCHAINBONUS)) / 100
             * (100 + PAttacker->getMod(Mod::SKILLCHAINDMG)) / 100);
 
-        auto PChar = dynamic_cast<CCharEntity *>(PAttacker);
-        if (PChar && PChar->StatusEffectContainer->HasStatusEffect(EFFECT_INNIN))
-        {
-            auto angle = PDefender->loc.p.rotation - getangle(PDefender->loc.p, PChar->loc.p);
-            // assuming default tolerance of 42 from lua_baseentity.cpp
-            if (angle > 86 && angle < 170)
-                damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));
-        }
         damage = damage * (1000 - resistance) / 1000;
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
         if (damage > 0)

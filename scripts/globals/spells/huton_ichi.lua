@@ -11,25 +11,18 @@ function onMagicCastingCheck(caster,target,spell)
 end
 
 function onSpellCast(caster,target,spell)
-    --doNinjutsuNuke(V,M,caster,spell,target,hasMultipleTargetReduction,resistBonus)
-    local duration = 15 + caster:getMerit(tpz.merit.HUTON_EFFECT) -- T1 bonus debuff duration
+    local duration = 15 + caster:getMerit(tpz.merit.HUTON_EFFECT) -- Bonus debuff duration
     local bonusAcc = 0
-    local bonusMab = caster:getMerit(tpz.merit.HUTON_EFFECT) -- T1 mag atk
+    local bonusMab = caster:getMerit(tpz.merit.HUTON_EFFECT) -- Bonus magic damage
 
     local params = {}
-
-    params.dmg = 28
-
-    params.multiplier = 0.5
-
-    params.hasMultipleTargetReduction = false
-
-    params.resistBonus = bonusAcc
-
-    params.mabBonus = bonusMab
-
+        params.dmg = 28
+        params.multiplier = 0.5
+        params.hasMultipleTargetReduction = false
+        params.resistBonus = bonusAcc
+        params.mabBonus = bonusMab
     dmg = doNinjutsuNuke(caster, target, spell, params)
-    handleNinjutsuDebuff(caster,target,spell,30,duration,tpz.mod.ICERES)
+    handleNinjutsuDebuff(caster, target, spell, 30, duration, tpz.mod.ICERES)
 
     return dmg
 end
