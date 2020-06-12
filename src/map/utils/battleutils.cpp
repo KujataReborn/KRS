@@ -1998,7 +1998,7 @@ namespace battleutils
                     }
                 }
 
-                storeTp = 1.0f + (storeTp / 100.0f)
+                storeTp = 1.0f + (storeTp / 100.0f);
 
                 PAttacker->addTP((int16)(tpMultiplier * (baseTp * storeTp)));
             }
