@@ -61,6 +61,7 @@ local casketInfo =
     splitZones = set{
        tpz.zone.ZERUHN_MINES,
        tpz.zone.KORROLOKA_TUNNEL,
+       tpz.zone.DANGRUF_WADI,
        tpz.zone.KING_RANPERRES_TOMB,
        tpz.zone.ORDELLES_CAVES,
        tpz.zone.OUTER_HORUTOTO_RUINS,
@@ -490,7 +491,7 @@ function getDrops(npc, dropType, zoneId)
                 items[i] = 4112 -- default to potion
             else
                 if math.random() < 0.05 then
-                    items[1] = casketItems[zoneId].regionalItems[math.random(1, #casketItems[zoneId].regionalItems)]
+                    items[1] = tpz.casket_loot.casketItems[zoneId].regionalItems[math.random(1, #tpz.casket_loot.casketItems[zoneId].regionalItems)]
                 else
                     items[i] = item
                 end
