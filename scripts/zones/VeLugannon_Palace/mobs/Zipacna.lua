@@ -90,8 +90,10 @@ function onMobInitialize(mob)
 end
 
 function onMobSpawn(mob)
-    onMobRoam(mob);
 end;
+    mob:setMod(tpz.mod.REGAIN, 100)
+
+    onMobRoam(mob)
 
 function onPath(mob)
     tpz.path.patrol(mob, path, tpz.path.flag.RUN);
