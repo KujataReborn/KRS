@@ -9,7 +9,7 @@ require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    if trade:hasItemQty(1195, 1) and trade:getItemCount() == 1) then -- Trade Ro'Maeve Water
+    if trade:hasItemQty(1195, 1) and trade:getItemCount() == 1 then -- Trade Ro'Maeve Water
         for i = ID.mob.OLLAS_OFFSET, ID.mob.OLLAS_OFFSET + 2 do
             if GetMobByID(i):isSpawned() then
                 return
