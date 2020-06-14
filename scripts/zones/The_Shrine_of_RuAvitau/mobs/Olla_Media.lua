@@ -4,6 +4,13 @@
 -----------------------------------
 local ID = require("scripts/zones/The_Shrine_of_RuAvitau/IDs");
 require("scripts/globals/settings");
+require("scripts/globals/status")
+-----------------------------------
+
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 120)
+end
 
 function onMobDeath(mob, player, isKiller)
     if (isKiller) then
