@@ -10,6 +10,10 @@ function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
+function onMobSpawn(mob)
+    mob:setMod(tpz.mod.DOUBLE_ATTACK, 10)
+end
+
 function onAdditionalEffect(mob,target,damage)
     if math.random(100) <= 10 then
         local drain = math.random(15, 30)
