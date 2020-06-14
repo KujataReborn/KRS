@@ -85,6 +85,10 @@ local path =
     -202, 0, 391,
 };
 
+function onMobInitialize(mob)
+    mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
+end
+
 function onMobSpawn(mob)
     onMobRoam(mob);
 end;
