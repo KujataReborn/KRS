@@ -2,7 +2,8 @@
 -- Area: VeLugannon Palace
 --  Mob: Zipacna
 -----------------------------------
-require("scripts/globals/pathfind");
+require("scripts/globals/pathfind")
+-----------------------------------
 
 local path =
 {
@@ -83,33 +84,33 @@ local path =
     -214, 0, 381,
     -209, 0, 387,
     -202, 0, 391,
-};
+}
 
 function onMobInitialize(mob)
     mob:setMobMod(tpz.mobMod.SIGHT_RANGE, 30)
 end
 
 function onMobSpawn(mob)
-end;
     mob:setMod(tpz.mod.REGAIN, 100)
     mob:addMod(tpz.mod.MOVE, 12)
 
     onMobRoam(mob)
+end
 
 function onPath(mob)
-    tpz.path.patrol(mob, path, tpz.path.flag.RUN);
-end;
+    tpz.path.patrol(mob, path, tpz.path.flag.RUN)
+end
 
 function onMobRoam(mob)
     -- move to start position if not moving
-    if (mob:isFollowingPath() == false) then
-        mob:pathThrough(tpz.path.first(path), tpz.path.flag.RUN);
+    if not mob:isFollowingPath() then
+        mob:pathThrough(tpz.path.first(path), tpz.path.flag.RUN)
     end
-end;
+end
 
 function onMobDeath(mob, player, isKiller)
-end;
+end
 
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(10800,14400)); -- respawn 3-4 hrs
-end;
+    mob:setRespawnTime(math.random(10800, 14400)) -- 3 to 4 hours
+end
