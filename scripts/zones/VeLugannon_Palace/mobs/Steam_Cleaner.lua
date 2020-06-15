@@ -26,6 +26,10 @@ function onAdditionalEffect(mob,target,damage)
     end
 end
 
+function onMobDeath(mob,player,isKiller)
+end
+
 function onMobDespawn(mob)
-    mob:setRespawnTime(math.random(7200, 14400)) -- 2 to 4 hours
+    SetServerVariable("[SKY]SteamCleanerRespawn", os.time() + math.random(7200, 14400)) -- 2 to 4 hour
+    GetMobByID(mob:getLocalVar("detector")):setLocalVar("pet", 0)
 end

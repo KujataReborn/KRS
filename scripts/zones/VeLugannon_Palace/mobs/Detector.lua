@@ -1,56 +1,67 @@
 -----------------------------------
 -- Area: VeLugannon Palace
---  Mob: Detector
+--  MOB: Detector
 -----------------------------------
+local ID = require("scripts/zones/VeLugannon_Palace/IDs")
 require("scripts/globals/regimes")
 -----------------------------------
 
+-- TODOS -----------------------------------------------------------------------------------
+-- Casting animation for before summons. When he spawns them isn't exactly retail accurate.
+-- Should be ~10s to start cast, and another ~5 to finish.
+
 function onMobSpawn(mob)
-    mob:setLocalVar("petCount", 1)
+    mob:setLocalVar("index", 1)
 end
 
 function onMobFight(mob,target)
-    local caretaker = GetMobByID(mob:getID() + 1)
-    local petCount = mob:getLocalVar("petCount")
+    local index = mob:getLocalVar("index")
 
-    -- Summons a Caretaker every 15 seconds.
-    -- TODO: Casting animation for before summons. When he spawns them isn't exactly retail accurate.
-    --       Should be ~10s to start cast, and another ~5 to finish.
-    -- Detectors can also still spawn the Caretakers while sleeping, moving, etc.
-    -- Maximum number of pets Detector can spawn is 5
-    if petCount <= 5 and mob:getBattleTime() % 15 < 3 and mob:getBattleTime() > 3 and not caretaker:isSpawned() then
-        caretaker:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
-        caretaker:spawn()
-        caretaker:updateEnmity(target)
-        mob:setLocalVar("petCount", petCount + 1)
-    end
+    if
+        index <= 5 and
+        mob:getLocalVar("pet") == 0 and
+        mob:getBattleTime() > 3 and
+        mob:getBattleTime() % 15 < 3
+    then
+        local mobID = mob:getID()
+        local pet   = GetMobByID(mobID + 1)
 
-    -- make sure pet has a target
-    if caretaker:getCurrentAction() == tpz.act.ROAMING then
-        caretaker:updateEnmity(target)
+        -- Only specific Detectors are able to spawn Caretaker
+        if mobID >= ID.mob.STEAM_CLEANER_PH_OFFSET then
+            if
+                os.time() >= GetServerVariable("[SKY]SteamCleanerRespawn") and
+                math.random(100) <= 100
+            then
+                pet = GetMobByID(ID.mob.STEAM_CLEANER)
+            end
+        end
+    
+        pet:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
+        pet:spawn()
+        pet:setLocalVar("detector", mobID)
+        pet:updateEnmity(target)
+
+        mob:setLocalVar("index", index + 1)
+        mob:setLocalVar("pet", 1)
     end
 end
 
-function onMobDisengage(mob)
-    local caretakerId = mob:getID() + 1
-
-    mob:resetLocalVars()
-
-    if GetMobByID(caretakerId):isSpawned() then
-        DespawnMob(caretakerId)
-    end
-end
 
 function onMobDeath(mob, player, isKiller)
     tpz.regime.checkRegime(player, mob, 743, 1, tpz.regime.type.GROUNDS)
+
+    local caretaker = GetMobByID(mob:getID() + 1)
+
+    if caretaker:isSpawned() then
+        caretaker:setHP(0)
+    end
 end
 
 function onMobDespawn(mob)
-    local caretakerId = mob:getID() + 1
+    local mobID = mob:getID()
 
-    mob:resetLocalVars()
-
-    if GetMobByID(caretakerId):isSpawned() then
-        DespawnMob(caretakerId)
+    -- Only specific Detectors are able to spawn Caretaker
+    if mobID >= ID.mob.STEAM_CLEANER_PH_OFFSET then
+        GetMobByID(mobID):setRespawnTime(1200) -- 30 minutes
     end
 end
