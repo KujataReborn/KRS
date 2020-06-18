@@ -467,9 +467,10 @@ function corsairSetup(caster, ability, action, effect, job)
     caster:setLocalVar("corsairRollTotal", roll)
     action:speceffect(caster:getID(), roll)
     if (checkForElevenRoll(caster)) then
-        action:recast(action:recast()/2) -- halves phantom roll recast timer for all rolls while under the effects of an 11 (upon first hitting 11, phantom roll cooldown is reset in double-up.lua)
+        action:recast(action:recast()/2)
     end
     checkForJobBonus(caster, job)
+    caster:addRecast(tpz.recast.ABILITY, 194, 8)
 end
 
 function atMaxCorsairBusts(caster)
