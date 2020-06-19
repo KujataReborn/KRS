@@ -26,8 +26,10 @@ zones[tpz.zone.VELUGANNON_PALACE] =
     },
     mob =
     {
-        MIMIC            = 17502567,
-        BRIGANDISH_BLADE = 17502568,
+        STEAM_CLEANER_PH_OFFSET = 17502535,
+        MIMIC                   = 17502567,
+        BRIGANDISH_BLADE        = 17502568,
+        STEAM_CLEANER           = 17502569,
     },
     npc =
     {
