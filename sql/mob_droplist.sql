@@ -15199,10 +15199,11 @@ INSERT INTO `mob_droplist` VALUES (2798,0,0,1000,15873,20);
 INSERT INTO `mob_droplist` VALUES (2798,0,0,1000,15876,20);
 INSERT INTO `mob_droplist` VALUES (2799,0,0,1000,15896,100);
 INSERT INTO `mob_droplist` VALUES (2799,0,0,1000,18390,100);
-INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1424,1000); -- (Zipacna) gem_of_the_north
-INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1424,300); -- (Zipacna) gem_of_the_north #2
-INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1442,200); -- (Zipacna) obl._abjuration
-INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,17804,100); -- (Zipacna) ushikikimaru
+-- Zipacna (Ve'Lugannon Palace) -------------------------------------------------------------------
+INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1424,1000);    -- Gem_of_the_north
+INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1424,240);     -- Gem of the North #2
+INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,1442,150);     -- Oblation Abjuration
+INSERT INTO `mob_droplist` VALUES (2800,0,0,1000,17804,100);    -- Ushikikimaru
 INSERT INTO `mob_droplist` VALUES (2801,0,0,1000,14807,370);
 INSERT INTO `mob_droplist` VALUES (2802,2,0,1000,751,0);
 INSERT INTO `mob_droplist` VALUES (2802,0,0,1000,2525,20);
