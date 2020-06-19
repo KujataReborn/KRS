@@ -15297,11 +15297,12 @@ INSERT INTO `mob_droplist` VALUES (2822,0,0,1000,1423,1000); -- (Ullikummi) autu
 INSERT INTO `mob_droplist` VALUES (2822,0,0,1000,1423,300); -- (Ullikummi) autumnstone #2
 INSERT INTO `mob_droplist` VALUES (2822,0,0,1000,1442,200); -- (Ullikummi) obl._abjuration
 INSERT INTO `mob_droplist` VALUES (2822,0,0,1000,18199,125); -- (Ullikummi) ulfhedinn_axe
-INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1425,1000); -- (Olla Grande) winterstone
-INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1425,300); -- (Olla Grande) winterstone #2
-INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1441,200); -- (Olla Grande) lib._abjuration
-INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1445,50); -- (Olla Grande) freyas_tear
-INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,16956,100); -- (Olla Grande) skofnung
+-- Olla Grande (The Shrine of Ru'Avitau) ----------------------------------------------------------
+INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1425,1000);              -- Winterstone
+INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1425,240);               -- Winterstone #2
+INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1441,150);               -- Libation Abjuration
+INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,1445,50);                -- Freya's Tear
+INSERT INTO `mob_droplist` VALUES (2823,0,0,1000,16956,100);              -- Skofnung
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,644,250);
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,955,70);
 INSERT INTO `mob_droplist` VALUES (2824,0,0,1000,955,70);

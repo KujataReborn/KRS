@@ -3854,6 +3854,27 @@ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Shantotto_II',428,159,1,255);      
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Shantotto_II',428,164,21,255);       -- Thunder
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Shantotto_II',428,169,5,255);        -- Water
 
+-- ------------------------------------------------------------------------------------------------
+-- Kujata Customs ---------------------------------------------------------------------------------
+
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,232,1,255);        -- Bio III
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,245,1,255);        -- Drain
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,247,1,255);        -- Aspir
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,266,1,255);        -- Absorb-STR
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,267,1,255);        -- Absorb-DEX
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,268,1,255);        -- Absorb-VIT
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,269,1,255);        -- Absorb-AGI
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,270,1,255);        -- Absorb-INT
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,271,1,255);        -- Absorb-MND
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,272,1,255);        -- Absorb-CHR
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,273,1,255);        -- Sleepga II
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Media',801,275,1,255);        -- Absorb-TP
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Grande',802,30,1,255);        -- Banish III
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Grande',802,40,1,255);        -- Banishga III
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Grande',802,53,1,255);        -- Blink
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Grande',802,54,1,255);        -- Stoneskin
+INSERT INTO `mob_spell_lists` VALUES ('Olla_Grande',802,112,1,255);       -- Flash
+
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
