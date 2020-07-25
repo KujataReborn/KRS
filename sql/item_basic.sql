@@ -2176,7 +2176,7 @@ INSERT INTO `item_basic` VALUES (2288,0,'square_of_karakul_cloth','karakul_cloth
 INSERT INTO `item_basic` VALUES (2289,0,'square_of_wamoura_cloth','wamoura_cloth',12,4,40,0,1087);
 INSERT INTO `item_basic` VALUES (2290,0,'chunk_of_imperial_cermet','imperial_cermet',12,4,44,0,1167);
 INSERT INTO `item_basic` VALUES (2291,0,'bag_of_puk_fletchings','puk_fletching',99,4,43,0,4);
-INSERT INTO `item_basic` VALUES (2292,0,'bag_of_apkallu_fletchings','apkal._fletching',99,4,43,0,1052);
+INSERT INTO `item_basic` VALUES (2292,0,'bag_of_apkallu_fletchings','apkal._fletching',99,4,43,0,4);
 INSERT INTO `item_basic` VALUES (2293,0,'handful_of_marid_tusk_arrowheads','m._tusk_arwhds.',99,4,43,0,46);
 INSERT INTO `item_basic` VALUES (2294,0,'handful_of_paralysis_arrowheads','par._arrowheads',99,4,43,0,1266);
 INSERT INTO `item_basic` VALUES (2295,0,'clump_of_mohbwa_grass','mohbwa_grass',12,4,40,0,1);
@@ -3595,6 +3595,8 @@ INSERT INTO `item_basic` VALUES (3737,0,'doll_stand','doll_stand',1,61520,0,1,0)
 INSERT INTO `item_basic` VALUES (3738,0,'eastern_umbrella','eastern_umbrella',1,61520,0,1,0);
 INSERT INTO `item_basic` VALUES (3739,0,'autumn_tree','autumn_tree',1,28736,0,1,0);
 INSERT INTO `item_basic` VALUES (3740,0,'model_synergy_furnace','model_synergy_furn.',1,28736,0,1,0);
+INSERT INTO `item_basic` VALUES (3742,0,'painting_of_a_mercenary','merc._painting',1,61504,0,1,0);
+INSERT INTO `item_basic` VALUES (3743,0,'moogle_bed','moogle_bed',1,28736,0,1,0);
 INSERT INTO `item_basic` VALUES (3840,0,'pulse_cell_mx','pulse_cell_mx',12,4100,46,1,0);
 INSERT INTO `item_basic` VALUES (3841,0,'pulse_cell_an','pulse_cell_an',12,4100,46,1,0);
 INSERT INTO `item_basic` VALUES (3842,0,'pulse_cell_fa','pulse_cell_fa',12,4100,46,1,0);
